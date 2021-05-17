@@ -12,3 +12,5 @@ enum ResultState<Data> where Data: Codable {
     case success(data: Data)
     case failed(error: Error)
 }
+
+

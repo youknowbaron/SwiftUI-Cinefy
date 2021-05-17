@@ -29,7 +29,8 @@ struct APIServiceImpl: APIService {
                         .mapError { _ in APIError.decodingError}
                         .eraseToAnyPublisher()
                 } else {
-                    return Fail(error: APIError.errorCode(response.statusCode))
+                    let json = try? JSONDecoder().decode(ErrorResponse.self, from: data)
+                    return Fail(error: APIError.errorCode(response.statusCode, json?.statusMessage ?? "Unknown Error"))
                         .eraseToAnyPublisher()
                 }
             }

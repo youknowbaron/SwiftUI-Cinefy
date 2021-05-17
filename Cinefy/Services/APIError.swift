@@ -9,7 +9,7 @@ import Foundation
 
 enum APIError {
     case decodingError
-    case errorCode(Int)
+    case errorCode(Int, String = "Unknown error")
     case unknown
 }
 
@@ -18,8 +18,8 @@ extension APIError: LocalizedError {
         switch self {
         case .decodingError:
             return "Failed to decode the object from the service"
-        case .errorCode(let code):
-            return "\(code) - Something went wrong"
+        case .errorCode(let code, let message):
+            return "\(code) - \(message)"
         case .unknown:
             return "Unknown error"
         }

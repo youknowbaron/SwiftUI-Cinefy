@@ -11,7 +11,7 @@ import SwiftUI
 struct CinefyApp: App {
     var body: some Scene {
         WindowGroup {
-            MoviesScreen()
+            LoginScreen()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
     }

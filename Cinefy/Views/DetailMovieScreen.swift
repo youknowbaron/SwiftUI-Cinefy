@@ -28,17 +28,18 @@ struct DetailMovieScreen: View {
                 ZStack(alignment: .topLeading) {
                     Color.bgColor
                     
-                    //                let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")!
-                    //
-                    //                URLImage(url) { image in
-                    //                    image
-                    //                        .resizable()
-                    //                        .aspectRatio(2/3, contentMode: .fit)
-                    //                }
+                    let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")!
                     
-                    Image("test_poster")
-                        .resizable()
-                        .aspectRatio(2/3, contentMode: .fit)
+                    URLImage(url) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(2/3, contentMode: .fit)
+                    }
+                    .frame(height: width * CGFloat(3/2))
+                    
+//                    Image("test_poster")
+//                        .resizable()
+//                        .aspectRatio(2/3, contentMode: .fit)
                     
                     ScrollView {
                         

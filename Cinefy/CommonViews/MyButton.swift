@@ -10,13 +10,13 @@ import SwiftUI
 struct MyButton: View {
     
     var text: String
-    var action: () -> Void
     var horizontalMargin: CGFloat
+    var action: () -> Void
     
-    init(_ text: String, action: @escaping () -> Void, horizontalMargin: CGFloat = 0) {
+    init(_ text: String,  horizontalMargin: CGFloat = 0, action: @escaping () -> Void) {
         self.text = text
-        self.action = action
         self.horizontalMargin = horizontalMargin
+        self.action = action
     }
     
     var body: some View {

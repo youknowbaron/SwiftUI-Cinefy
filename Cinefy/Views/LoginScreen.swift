@@ -9,39 +9,62 @@ import SwiftUI
 
 struct LoginScreen: View {
     
-    @State var email: String = ""
-    @State var password: String = ""
+    @ObservedObject var viewModel = LoginViewModel(apiService: APIServiceImpl())
+    
+    @State var username: String = "patricklagger"
+    @State var password: String = "31121995"
     
     var body: some View {
-        VStack {
-            Text("C I N E F Y")
-                .font(.system(size: 40.0, weight: .thin, design: .monospaced))
-                .padding(.bottom, 60)
+        ZStack {
+            Color.bgColor.ignoresSafeArea()
             
-            VStack(spacing: 20) {
-                TextField("Email", text: $email)
-                    .autocapitalization(.none)
-                    .keyboardType(.emailAddress)
+            VStack {
+                Text("C I N E F Y")
+                    .font(.system(size: 40.0, weight: .thin, design: .monospaced))
+                    .padding(.bottom, 60)
                 
-                SecureField("Password", text: $password)
-                    .padding(.bottom, 20)
-                
-                Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
-                    Text("Login")
-                        .frame(maxWidth: .infinity)
-                        .font(.system(size: 20, weight: .semibold))
-                        .padding()
+                VStack(spacing: 20) {
+                    TextField("Username", text: $username)
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
+                    
+                    SecureField("Password", text: $password)
+                        .padding(.bottom, 20)
+                    
+                    MyButton("Login", horizontalMargin: 40) {
+                        viewModel.login(username: username, password: password)
+                    }.alert(isPresented: .constant(viewModel.isSuccess == false)) {
+                        var message = "Unknown error"
+                        
+                        if case .failed(error: let e) = viewModel.state {
+                            if let errorDescription = (e as? APIError)?.errorDescription {
+                                message = errorDescription
+                            }
+                        }
+                        return Alert(
+                            title: Text("Error"),
+                            message: Text(message),
+                            dismissButton: .default(Text("OK"))
+                        )
+                    }
+                    
+                    if case .loading = viewModel.state {
+                        ProgressView("Loading")
+                            .padding()
+                    }
                 }
-                .background(Color.buttonColor)
-                .cornerRadius(20)
-                .padding(.horizontal, 40)
+                .padding(25)
             }
-            .padding(25)
         }
         .foregroundColor(.textColor)
         .textFieldStyle(MyTextFieldStyle())
+        .onAppear {
+            viewModel.getRquestToken()
+        }
+        .navigate(to: MoviesScreen(), when: .constant(viewModel.isSuccess == true))
     }
 }
+
 
 struct MyTextFieldStyle : TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
