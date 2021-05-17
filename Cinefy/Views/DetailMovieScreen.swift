@@ -46,16 +46,12 @@ struct DetailMovieScreen: View {
                         VStack(alignment: .leading, spacing: 0) {
                             
                             VStack(alignment: .leading, spacing: 20) {
-                                Group {
-                                    Image(systemName: "play.fill")
-                                        .foregroundColor(.white)
-                                        .padding(25)
-                                }
-                                .background(Color.white.opacity(0.17))
-                                .cornerRadius(25)
-                                .onTapGesture {
-                                    print("on play tap")
-                                }
+                               
+                                Image(systemName: "play.fill")
+                                    .buttify(backgroundColor: .white.opacity(0.17))
+                                    .onTapGesture {
+                                        print("on play tap")
+                                    }
                                 
                                 Text(movie.title)
                                     .font(.system(size: 38, weight: .bold))
@@ -88,7 +84,7 @@ struct DetailMovieScreen: View {
                                 
                                 VStack(spacing: 15) {
                                     RatingView(movie.voteAverage, insertSpacer: true)
-                                    InformationLine(key: "Vote cound", value: String(movie.voteCount))
+                                    InformationLine(key: "Vote count", value: String(movie.voteCount))
                                     InformationLine(key: "Popularity", value: String(movie.popularity))
                                 }
                                 .padding(20)

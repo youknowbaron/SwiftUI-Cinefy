@@ -33,27 +33,28 @@ struct LoginScreen: View {
                     
                     MyButton("Login", horizontalMargin: 40) {
                         viewModel.login(username: username, password: password)
-                    }.alert(isPresented: .constant(viewModel.isSuccess == false)) {
+                    }.alert(isPresented: .constant(viewModel.shouldShowAlert)) {
                         var message = "Unknown error"
                         
-                        if case .failed(error: let e) = viewModel.state {
-                            if let errorDescription = (e as? APIError)?.errorDescription {
-                                message = errorDescription
-                            }
+                        if case .failed(error: let e) = viewModel.state,
+                           let errorDescription = (e as? APIError)?.errorDescription {
+                            message = errorDescription
                         }
+                        
                         return Alert(
                             title: Text("Error"),
                             message: Text(message),
                             dismissButton: .default(Text("OK"))
                         )
                     }
-                    
-                    if case .loading = viewModel.state {
-                        ProgressView("Loading")
-                            .padding()
-                    }
                 }
                 .padding(25)
+            }
+            
+            if case .loading = viewModel.state {
+                ProgressView("Loading")
+                    .padding()
+                    .buttify(backgroundColor: .white.opacity(0.25))
             }
         }
         .foregroundColor(.textColor)
@@ -61,7 +62,7 @@ struct LoginScreen: View {
         .onAppear {
             viewModel.getRquestToken()
         }
-        .navigate(to: MoviesScreen(), when: .constant(viewModel.isSuccess == true))
+        .navigate(to: MoviesScreen(), when: .constant(viewModel.isLoginSuccess))
     }
 }
 

@@ -123,8 +123,8 @@
 				FED7D912264CDA3F00254BD1 /* Services */,
 				FED7D90D264CC9F400254BD1 /* Models */,
 				FED7D91B264CDF7700254BD1 /* ViewModels */,
-				FED7D90C264CC8EF00254BD1 /* CommonViews */,
 				FED7D904264BC10D00254BD1 /* Views */,
+				FED7D90C264CC8EF00254BD1 /* CommonViews */,
 				FED7D901264BBEB300254BD1 /* Resources */,
 				FED7D909264BC69700254BD1 /* Extensions */,
 				FED7D8EB264BBC3D00254BD1 /* CinefyApp.swift */,
@@ -157,9 +157,8 @@
 			children = (
 				FED7D8FD264BBDC200254BD1 /* SplashScreen.swift */,
 				FED7D905264BC3D800254BD1 /* LoginScreen.swift */,
-				FED7D923264CE90100254BD1 /* MovieItem.swift */,
-				FED7D925264D08E200254BD1 /* RatingView.swift */,
 				FE022E2F264D28DC002DEEC0 /* MoviesScreen.swift */,
+				FED7D923264CE90100254BD1 /* MovieItem.swift */,
 				FED7D927264D1AAA00254BD1 /* DetailMovieScreen.swift */,
 			);
 			path = Views;
@@ -177,6 +176,7 @@
 		FED7D90C264CC8EF00254BD1 /* CommonViews */ = {
 			isa = PBXGroup;
 			children = (
+				FED7D925264D08E200254BD1 /* RatingView.swift */,
 				FE57B00D264E511200D943D0 /* Grid.swift */,
 				FE57B00E264E511200D943D0 /* GridLayout.swift */,
 				FED7D8FF264BBE3200254BD1 /* LogoAnimatedView.swift */,

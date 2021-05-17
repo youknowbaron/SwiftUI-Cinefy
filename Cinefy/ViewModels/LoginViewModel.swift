@@ -20,8 +20,28 @@ class LoginViewModel: ObservableObject {
     
     private var requestToken: String?
     
-    @Published var state: ResultState<Bool>?
-    @Published var isSuccess: Bool?
+    private(set) var state: ResultState<Bool>? {
+        didSet {
+            switch self.state {
+            case .loading:
+                shouldShowAlert = false
+                isLoginSuccess = false
+                break
+            case .failed(_):
+                isLoginSuccess = false
+                shouldShowAlert = true
+                break
+            case .success:
+                isLoginSuccess = true
+                shouldShowAlert = false
+                break
+            case .none:
+                break
+            }
+        }
+    }
+    @Published var isLoginSuccess: Bool = false
+    @Published var shouldShowAlert = false
     
     func getRquestToken() {
         let cancellable = apiService.request(.requestToken, dataType: TokenResponse.self)
@@ -31,7 +51,7 @@ class LoginViewModel: ObservableObject {
                     break
                 case .failure(let error):
                     print("Error: \(error.errorDescription ?? "")")
-                    self.isSuccess = false
+                    self.state = .failed(error: error)
                     break
                 }
             } receiveValue: { value in
@@ -58,7 +78,6 @@ class LoginViewModel: ObservableObject {
             case .failure(let error):
                 print("Error: \(error.errorDescription ?? "")")
                 self.state = .failed(error: error)
-                self.isSuccess = false
                 break
             }
         } receiveValue: { value in
@@ -74,12 +93,10 @@ class LoginViewModel: ObservableObject {
                 switch status {
                 case .finished:
                     self.state = .success(data: true)
-                    self.isSuccess = true
                     break
                 case .failure(let error):
                     print("Error: \(error.errorDescription ?? "")")
                     self.state = .failed(error: error)
-                    self.isSuccess = false
                     break
                 }
             } receiveValue: { value in

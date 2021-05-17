@@ -9,7 +9,9 @@ import SwiftUI
 
 struct MoviesScreen: View {
     
-    @ObservedObject var movieViewModel = MovieViewModel(apiService: APIServiceImpl())
+    @ObservedObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
+    
+    @Environment(\.presentationMode) var presentationMode
     
     var body: some View {
         NavigationView {
@@ -18,30 +20,39 @@ struct MoviesScreen: View {
                 
                 VStack {
                     
-                    Text("Now playing")
-                        .font(.system(size: 20, weight: .semibold))
+                    HStack {
+                        
+                        Spacer()
+                    
+                        Text("Now playing")
+                            .font(.system(size: 20, weight: .semibold))
+                        
+                        Spacer()
+                        
+                        Image(systemName: "arrow.uturn.right")
+                            .padding()
+                            .onTapGesture {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        
+                    }
                     
                     ScrollView {
-                        
-                        if movieViewModel.movies.count > 0 {
-                            let movie = movieViewModel.movies[0]
+                        ForEach(viewModel.movies) {movie in
                             NavigationLink(destination: DetailMovieScreen(movie: movie)) {
                                 MovieItem(movie: movie)
                             }
                             .padding()
-        
                         }
                     }
-                    
                 }
             }
-            
             .navigationBarTitle("")
             .navigationBarHidden(true)
             .foregroundColor(.textColor)
         }
         .onAppear {
-            movieViewModel.getMovie()
+            viewModel.getMovie()
         }
     }
 }
