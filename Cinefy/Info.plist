@@ -29,6 +29,8 @@
 	<true/>
 	<key>UILaunchScreen</key>
 	<dict>
+		<key>UIColorName</key>
+		<string>launchScreenBackground</string>
 		<key>UIImageName</key>
 		<string>logo_cinefy</string>
 	</dict>

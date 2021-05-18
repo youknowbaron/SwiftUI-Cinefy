@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import URLImage
+import SDWebImageSwiftUI
 
 struct DetailMovieScreen: View {
     
@@ -28,18 +28,10 @@ struct DetailMovieScreen: View {
                 ZStack(alignment: .topLeading) {
                     Color.bgColor
                     
-                    let url = URL(string: "https://image.tmdb.org/t/p/w500\(movie.posterPath)")!
-                    
-                    URLImage(url) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(2/3, contentMode: .fit)
-                    }
-                    .frame(height: width * CGFloat(3/2))
-                    
-//                    Image("test_poster")
-//                        .resizable()
-//                        .aspectRatio(2/3, contentMode: .fit)
+                    WebImage(url: URL(string: movie.posterPath.addImageUrl(quality: 500))!)
+                        .resizable()
+                        .scaledToFit()
+                        .aspectRatio(2/3, contentMode: .fit)
                     
                     ScrollView {
                         
@@ -73,7 +65,7 @@ struct DetailMovieScreen: View {
                                 }
                                 .padding(.top, 10)
                             }
-                            .padding(40)
+                            .padding([.top, .horizontal], 40)
                             .background(LinearGradient(
                                 gradient: Gradient(colors: [.bgColor.opacity(0), .bgColor]),
                                 startPoint: UnitPoint(x: 0.5, y: 0),
@@ -96,8 +88,8 @@ struct DetailMovieScreen: View {
                                     IconLine(iconName: "map", value: movie.productionCountries?.toString() ?? "")
                                     IconLine(iconName: "speaker.2", value: movie.spokenLanguages?.toString() ?? "")
                                 }
-                                .frame(maxWidth: .infinity)
                                 .padding(20)
+                                .frame(maxWidth: .infinity)
                                 .overlyfy()
                                 
                                 VStack(alignment: .leading, spacing: 10) {
@@ -105,13 +97,26 @@ struct DetailMovieScreen: View {
                                         .font(.system(size: 16, weight: .medium))
                                     Text(movie.overview)
                                         .foregroundColor(.subTextColor)
+                                        .lineLimit(9999)
                  
                                 }
                                 .padding(20)
                                 .overlyfy()
+                                
+                                Text("Cast")
+                                    .font(.system(size: 16, weight: .medium))
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 20) {
+                                        ForEach(viewModel.cast) { cast in
+                                            CastItem(cast: cast)
+                                        }
+                                    }
+                                }
+                                
                             }
                             .padding(.horizontal, 20)
-                            .padding(.bottom, 40)
+                            .padding(.vertical, 40)
                             .background(Color.bgColor)
                         }
                         .padding(.top, width / 2)
@@ -126,6 +131,7 @@ struct DetailMovieScreen: View {
         }
         .onAppear {
             viewModel.getDetailMovie(id: movie.id)
+            viewModel.getCast(id: movie.id)
         }
     }
 }
@@ -136,10 +142,11 @@ struct IconLine: View {
     var value: String
     
     var body: some View {
-        HStack(alignment: .top) {
+        HStack {
             Image(systemName: iconName).foregroundColor(.highlightColor)
             Text(value).padding(.leading, 10)
                 .foregroundColor(.subTextColor)
+            Spacer()
         }
     }
 }

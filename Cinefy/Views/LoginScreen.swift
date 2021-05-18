@@ -19,8 +19,8 @@ struct LoginScreen: View {
             Color.bgColor.ignoresSafeArea()
             
             VStack {
-                Text("C I N E F Y")
-                    .font(.system(size: 40.0, weight: .thin, design: .monospaced))
+                Image("logo_cinefy")
+                    .frame(width: 200)
                     .padding(.bottom, 60)
                 
                 VStack(spacing: 20) {

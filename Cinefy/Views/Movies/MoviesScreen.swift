@@ -22,12 +22,19 @@ struct MoviesScreen: View {
                     
                     HStack {
                         
-                        Spacer()
-                    
-                        Text("Now playing")
-                            .font(.system(size: 20, weight: .semibold))
+                        Image("logo_cinefy")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100)
+                            .padding(.leading, 20)
                         
                         Spacer()
+                        
+                        Image(systemName: "magnifyingglass")
+                            .padding()
+                            .onTapGesture {
+                                
+                            }
                         
                         Image(systemName: "arrow.uturn.right")
                             .padding()
@@ -36,15 +43,13 @@ struct MoviesScreen: View {
                             }
                         
                     }
-                    
-                    ScrollView {
-                        ForEach(viewModel.movies) {movie in
-                            NavigationLink(destination: DetailMovieScreen(movie: movie)) {
-                                MovieItem(movie: movie)
-                            }
-                            .padding()
-                        }
+                    TabView {
+                        MoviesListView(movies: viewModel.movies)
+                        MoviesListView(movies: viewModel.movies)
+                        MoviesListView(movies: viewModel.movies)
                     }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+                    .ignoresSafeArea()
                 }
             }
             .navigationBarTitle("")

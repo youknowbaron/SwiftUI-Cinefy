@@ -6,14 +6,14 @@
 //
 
 import SwiftUI
-import URLImage
+import SDWebImageSwiftUI
 
 struct MovieItem: View {
     
     var movie: Movie
     
     var body: some View {
-        let url = URL(string: "https://image.tmdb.org/t/p/w400\(movie.backdropPath)")!
+        let url = URL(string: movie.backdropPath.addImageUrl())!
         
         VStack(alignment: .leading, spacing: 10) {
             
@@ -21,11 +21,10 @@ struct MovieItem: View {
 //
 //            }
             
-            URLImage(url, inProgress: { _ in PlaceholderImage()}) { image in
-                image.resizable()
-                    .cornerRadius(30)
-                    .aspectRatio(2/1, contentMode: .fill)
-            }
+            WebImage(url: url)
+                .resizable()
+                .cornerRadius(30)
+                .aspectRatio(2/1, contentMode: .fill)
             
             Text(movie.title).font(.system(size: 20, weight: .medium))
                 .foregroundColor(.textColor)

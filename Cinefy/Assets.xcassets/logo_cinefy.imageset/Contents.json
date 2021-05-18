@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "logo_homnema.png",
+      "filename" : "CINEFY (1).png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "logo_homnema-1.png",
+      "filename" : "CINEFY (1)-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "logo_homnema-2.png",
+      "filename" : "CINEFY (1)-2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

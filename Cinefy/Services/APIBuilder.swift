@@ -16,10 +16,8 @@ protocol APIBuilder {
 }
 
 enum CinefyApi {
-    case getNowPlayingMovie
     
-    case getMovieDetail(Int)
-    
+    // MARK: - API: Authentication
     case requestToken
     
     case createSession(body: [String: String])
@@ -27,6 +25,20 @@ enum CinefyApi {
     case createSessionWithLogin(body: [String: String])
     
     case getDetailAccount(sessionId: String)
+    
+    // MARK: - API: Movies
+    case getNowPlayingMovie
+    
+    case getMovieDetail(Int)
+    
+    case getCredits(movieId: Int)
+    
+    case getReviews(movieId: Int)
+    
+    case getRecommendations(movieId: Int)
+    
+    case getSimilar(movieId: Int)
+    
 }
 
 extension CinefyApi : APIBuilder {
@@ -46,10 +58,7 @@ extension CinefyApi : APIBuilder {
     
     var path: String {
         switch self {
-        case .getNowPlayingMovie:
-            return "movie/now_playing"
-        case .getMovieDetail(let id):
-            return "movie/\(id)"
+        // MARK: - Path: Authentication
         case .requestToken:
             return "authentication/token/new"
         case .createSession(_):
@@ -58,6 +67,19 @@ extension CinefyApi : APIBuilder {
             return "authentication/token/validate_with_login"
         case .getDetailAccount(_):
             return "account"
+        // MARK: - Path: Movies
+        case .getNowPlayingMovie:
+            return "movie/now_playing"
+        case .getMovieDetail(let id):
+            return "movie/\(id)"
+        case .getCredits(let id):
+            return "movie/\(id)/credits"
+        case .getReviews(let id):
+            return "movie/\(id)/reviews"
+        case .getRecommendations(let id):
+            return "movie/\(id)/recommendations"
+        case .getSimilar(let id):
+            return "movie/\(id)/similar"
         }
     }
     
