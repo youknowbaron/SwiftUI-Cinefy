@@ -12,14 +12,14 @@ struct MoviesListView: View {
     var movies: [Movie]
     
     var body: some View {
-        ScrollView {
+        
             ForEach(movies) {movie in
                 NavigationLink(destination: DetailMovieScreen(movie: movie)) {
                     MovieItem(movie: movie)
                 }
                 .padding()
             }
-        }
+        
     }
 }
 

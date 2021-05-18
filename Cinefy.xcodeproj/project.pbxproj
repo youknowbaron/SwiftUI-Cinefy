@@ -25,6 +25,11 @@
 		FE78DC042653635D00A7FE3C /* CastItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC032653635D00A7FE3C /* CastItem.swift */; };
 		FE78DC0626537AFC00A7FE3C /* Review.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC0526537AFC00A7FE3C /* Review.swift */; };
 		FE78DC0826537B8800A7FE3C /* ReviewsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC0726537B8800A7FE3C /* ReviewsResponse.swift */; };
+		FE78DC0A2653953C00A7FE3C /* PopularHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC092653953C00A7FE3C /* PopularHeaderView.swift */; };
+		FE78DC0C2653A0F600A7FE3C /* MoviesHorizontalListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC0B2653A0F600A7FE3C /* MoviesHorizontalListView.swift */; };
+		FE78DC0E2653A13F00A7FE3C /* MovieHorizontalItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC0D2653A13F00A7FE3C /* MovieHorizontalItem.swift */; };
+		FE78DC102653A1BB00A7FE3C /* Top10Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC0F2653A1BB00A7FE3C /* Top10Badge.swift */; };
+		FE78DC122653A26700A7FE3C /* HomeTopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DC112653A26700A7FE3C /* HomeTopBar.swift */; };
 		FEB9C2D3264E0EFF00B7AD0E /* MyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB9C2D2264E0EFF00B7AD0E /* MyButton.swift */; };
 		FEB9C2D5264E2A2D00B7AD0E /* PlaceholderImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB9C2D4264E2A2D00B7AD0E /* PlaceholderImage.swift */; };
 		FEB9C2D7264E2D6E00B7AD0E /* DetailMovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FEB9C2D6264E2D6E00B7AD0E /* DetailMovieViewModel.swift */; };
@@ -73,6 +78,11 @@
 		FE78DC032653635D00A7FE3C /* CastItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CastItem.swift; sourceTree = "<group>"; };
 		FE78DC0526537AFC00A7FE3C /* Review.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Review.swift; sourceTree = "<group>"; };
 		FE78DC0726537B8800A7FE3C /* ReviewsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewsResponse.swift; sourceTree = "<group>"; };
+		FE78DC092653953C00A7FE3C /* PopularHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularHeaderView.swift; sourceTree = "<group>"; };
+		FE78DC0B2653A0F600A7FE3C /* MoviesHorizontalListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesHorizontalListView.swift; sourceTree = "<group>"; };
+		FE78DC0D2653A13F00A7FE3C /* MovieHorizontalItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieHorizontalItem.swift; sourceTree = "<group>"; };
+		FE78DC0F2653A1BB00A7FE3C /* Top10Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Top10Badge.swift; sourceTree = "<group>"; };
+		FE78DC112653A26700A7FE3C /* HomeTopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTopBar.swift; sourceTree = "<group>"; };
 		FEB9C2D2264E0EFF00B7AD0E /* MyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyButton.swift; sourceTree = "<group>"; };
 		FEB9C2D4264E2A2D00B7AD0E /* PlaceholderImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceholderImage.swift; sourceTree = "<group>"; };
 		FEB9C2D6264E2D6E00B7AD0E /* DetailMovieViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMovieViewModel.swift; sourceTree = "<group>"; };
@@ -120,9 +130,13 @@
 		FE78DBF9265278A200A7FE3C /* Movies */ = {
 			isa = PBXGroup;
 			children = (
-				FED7D923264CE90100254BD1 /* MovieItem.swift */,
 				FE022E2F264D28DC002DEEC0 /* MoviesScreen.swift */,
+				FED7D923264CE90100254BD1 /* MovieItem.swift */,
 				FE78DBFA265278C400A7FE3C /* MoviesListView.swift */,
+				FE78DC092653953C00A7FE3C /* PopularHeaderView.swift */,
+				FE78DC0B2653A0F600A7FE3C /* MoviesHorizontalListView.swift */,
+				FE78DC0D2653A13F00A7FE3C /* MovieHorizontalItem.swift */,
+				FE78DC112653A26700A7FE3C /* HomeTopBar.swift */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -219,6 +233,7 @@
 				FEB9C2D4264E2A2D00B7AD0E /* PlaceholderImage.swift */,
 				FEB9C2D8264E328100B7AD0E /* OverlayBackground.swift */,
 				FE57B011264E584700D943D0 /* OverlayButton.swift */,
+				FE78DC0F2653A1BB00A7FE3C /* Top10Badge.swift */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -348,6 +363,7 @@
 				FED7D92C264D1FF800254BD1 /* ProductionCompany.swift in Sources */,
 				FED7D900264BBE3200254BD1 /* LogoAnimatedView.swift in Sources */,
 				FED7D924264CE90100254BD1 /* MovieItem.swift in Sources */,
+				FE78DC122653A26700A7FE3C /* HomeTopBar.swift in Sources */,
 				FE78DBED265204A300A7FE3C /* TokenResponse.swift in Sources */,
 				FEB9C2D7264E2D6E00B7AD0E /* DetailMovieViewModel.swift in Sources */,
 				FE78DC01265361D200A7FE3C /* CreditsResponse.swift in Sources */,
@@ -362,7 +378,9 @@
 				FED7D918264CDCB400254BD1 /* APIService.swift in Sources */,
 				FEB9C2D3264E0EFF00B7AD0E /* MyButton.swift in Sources */,
 				FED7D908264BC59D00254BD1 /* MyColors.swift in Sources */,
+				FE78DC0E2653A13F00A7FE3C /* MovieHorizontalItem.swift in Sources */,
 				FEB9C2D5264E2A2D00B7AD0E /* PlaceholderImage.swift in Sources */,
+				FE78DC0A2653953C00A7FE3C /* PopularHeaderView.swift in Sources */,
 				FED7D8FE264BBDC200254BD1 /* SplashScreen.swift in Sources */,
 				FE57B012264E584700D943D0 /* OverlayButton.swift in Sources */,
 				FE78DBFD26535E0F00A7FE3C /* StringExtensions.swift in Sources */,
@@ -374,7 +392,9 @@
 				FE57B014264E68CD00D943D0 /* LoginViewModel.swift in Sources */,
 				FED7D91A264CDF3300254BD1 /* ResultState.swift in Sources */,
 				FED7D926264D08E200254BD1 /* RatingView.swift in Sources */,
+				FE78DC0C2653A0F600A7FE3C /* MoviesHorizontalListView.swift in Sources */,
 				FED7D90B264BC6CD00254BD1 /* ColorExtension.swift in Sources */,
+				FE78DC102653A1BB00A7FE3C /* Top10Badge.swift in Sources */,
 				FE78DBFB265278C400A7FE3C /* MoviesListView.swift in Sources */,
 				FE78DBFF2653614200A7FE3C /* Cast.swift in Sources */,
 				FE78DBF126521A8300A7FE3C /* ViewExtensions.swift in Sources */,

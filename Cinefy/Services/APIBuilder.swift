@@ -27,7 +27,11 @@ enum CinefyApi {
     case getDetailAccount(sessionId: String)
     
     // MARK: - API: Movies
-    case getNowPlayingMovie
+    case getNowPlayingMovies
+    
+    case getPopularMovies
+    
+    case getUpcomingMovies
     
     case getMovieDetail(Int)
     
@@ -38,7 +42,6 @@ enum CinefyApi {
     case getRecommendations(movieId: Int)
     
     case getSimilar(movieId: Int)
-    
 }
 
 extension CinefyApi : APIBuilder {
@@ -68,8 +71,12 @@ extension CinefyApi : APIBuilder {
         case .getDetailAccount(_):
             return "account"
         // MARK: - Path: Movies
-        case .getNowPlayingMovie:
+        case .getNowPlayingMovies:
             return "movie/now_playing"
+        case .getPopularMovies:
+            return "movie/popular"
+        case .getUpcomingMovies:
+            return "movie/upcoming"
         case .getMovieDetail(let id):
             return "movie/\(id)"
         case .getCredits(let id):

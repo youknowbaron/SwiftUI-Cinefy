@@ -9,55 +9,68 @@ import SwiftUI
 
 struct MoviesScreen: View {
     
-    @ObservedObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
-    
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
     
     var body: some View {
         NavigationView {
-            ZStack {
-                Color.bgColor.ignoresSafeArea()
+            
+            GeometryReader { geometry in
                 
-                VStack {
+                let width = geometry.size.width
+                
+                ZStack(alignment: .top) {
+                    Color.bgColor.ignoresSafeArea()
                     
-                    HStack {
+                    ScrollView {
                         
-                        Image("logo_cinefy")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100)
-                            .padding(.leading, 20)
-                        
-                        Spacer()
-                        
-                        Image(systemName: "magnifyingglass")
-                            .padding()
-                            .onTapGesture {
-                                
+                        VStack(alignment: .leading) {
+                            
+                            if let popularMovie = viewModel.popularMovie {
+                                PopularHeaderView(movie: popularMovie, no: viewModel.orderNumberOfPopularMovie)
+                                    .frame(width: width, height: width * 3 / 2)
+                                    .onReceive(viewModel.timer) { time in
+                                        viewModel.changePopularMovie()
+                                    }
+                                    .animation(.linear)
+                                    
                             }
-                        
-                        Image(systemName: "arrow.uturn.right")
-                            .padding()
-                            .onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
-                            }
-                        
+                            
+                            Text("Now Playing")
+                                .font(.system(size: 20, weight: .bold))
+                                .padding(.leading, 15)
+                            
+                            MoviesHorizontalListView(movies: viewModel.nowPlayingMovies)
+                            
+                            Text("Popular Today")
+                                .font(.system(size: 20, weight: .bold))
+                                .padding([.leading, .top], 15)
+                            
+                            MoviesHorizontalListView(movies: viewModel.popularMovies, isPopular: true)
+                            
+                            Text("Upcoming")
+                                .font(.system(size: 20, weight: .bold))
+                                .padding([.leading, .top], 15)
+                            
+                            MoviesHorizontalListView(movies: viewModel.upcomingMovies)
+                        }
+                        .padding(.bottom, 40)
                     }
-                    TabView {
-                        MoviesListView(movies: viewModel.movies)
-                        MoviesListView(movies: viewModel.movies)
-                        MoviesListView(movies: viewModel.movies)
-                    }
-                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
                     .ignoresSafeArea()
+                    
+                    HomeTopBar {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
+                .foregroundColor(.textColor)
             }
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
-            .foregroundColor(.textColor)
         }
         .onAppear {
-            viewModel.getMovie()
+            viewModel.getPopularMovies()
+            viewModel.getNowPlayingMovies()
+            viewModel.getUpcomingMovies()
         }
     }
 }

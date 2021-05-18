@@ -14,20 +14,27 @@ class MovieViewModel : ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    @Published private(set) var movies: [Movie] = [Movie]()
+    @Published private(set) var nowPlayingMovies: [Movie] = [Movie]()
+    @Published private(set) var upcomingMovies: [Movie] = [Movie]()
+    
     @Published private(set) var state: ResultState<[Movie]> = .loading
+    
+    @Published private(set) var popularMovies: [Movie] = [Movie]()
+    @Published private(set) var popularMovie: Movie?
+    
+    private(set) var timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     init(apiService: APIService) {
         self.apiService = apiService
     }
     
-    func getMovie() {
-        let cancellable = apiService.request(.getNowPlayingMovie, dataType: MoviesResponse.self)
+    func getNowPlayingMovies() {
+        let cancellable = apiService.request(.getNowPlayingMovies, dataType: MoviesResponse.self)
             .sink { status in
                 switch status {
                 case .finished:
-                    self.state = .success(data: self.movies)
-                    print("Movies length: \(self.movies.count)")
+                    self.state = .success(data: self.nowPlayingMovies)
+                    print("Movies length: \(self.nowPlayingMovies.count)")
                     break
                 case .failure(let error):
                     print("Error: \(error)")
@@ -35,9 +42,53 @@ class MovieViewModel : ObservableObject {
                     break
                 }
             } receiveValue: { value in
-                self.movies = value.results
+                self.nowPlayingMovies = value.results
             }
         cancellables.insert(cancellable)
     }
     
+    func getPopularMovies() {
+        let cancellable = apiService.request(.getPopularMovies, dataType: MoviesResponse.self)
+            .sink { status in
+                switch status {
+                case .finished:
+                    print("Loaded popular movies successfully")
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                    self.state = .failed(error: error)
+                    break
+                }
+            } receiveValue: { value in
+                self.popularMovie = value.results.randomElement()
+                self.popularMovies = value.results
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    func getUpcomingMovies() {
+        let cancellable = apiService.request(.getUpcomingMovies, dataType: MoviesResponse.self)
+            .sink { status in
+                switch status {
+                case .finished:
+                    print("Loaded upcoming movies successfully")
+                    break
+                case .failure(let error):
+                    print("Error: \(error)")
+                    self.state = .failed(error: error)
+                    break
+                }
+            } receiveValue: { value in
+                self.upcomingMovies = value.results
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    func changePopularMovie() {
+        popularMovie = popularMovies.randomElement()
+    }
+    
+    var orderNumberOfPopularMovie: Int {
+       popularMovies.firstIndex(matching: popularMovie!)! + 1
+    }
 }

@@ -30,6 +30,7 @@ struct DetailMovieScreen: View {
                     
                     WebImage(url: URL(string: movie.posterPath.addImageUrl(quality: 500))!)
                         .resizable()
+                        .frame(width: width, height: width * 1.5)
                         .scaledToFit()
                         .aspectRatio(2/3, contentMode: .fit)
                     
