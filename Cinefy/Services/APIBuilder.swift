@@ -42,6 +42,14 @@ enum CinefyApi {
     case getRecommendations(movieId: Int)
     
     case getSimilar(movieId: Int)
+    
+    case searchMulti(query: String)
+    
+    case searchKeyword(query: String)
+    
+    case searchPeople(query: String)
+    
+    case searchMovie(query: String)
 }
 
 extension CinefyApi : APIBuilder {
@@ -87,6 +95,15 @@ extension CinefyApi : APIBuilder {
             return "movie/\(id)/recommendations"
         case .getSimilar(let id):
             return "movie/\(id)/similar"
+        // MARK: - Path: Search
+        case .searchMulti(_):
+            return "search/multi"
+        case .searchKeyword(_):
+            return "search/keyword"
+        case .searchPeople(_):
+            return "search/person"
+        case .searchMovie(_):
+            return "search/movie"
         }
     }
     
@@ -96,10 +113,12 @@ extension CinefyApi : APIBuilder {
         case .getDetailAccount(let sessionId):
             url = url.addQuery(queries: ["session_id" : sessionId])
             break
+        case .searchMulti(let query), .searchKeyword(let query), .searchPeople(let query), .searchMovie(let query):
+            url = url.addQuery(queries: ["query": query])
         default:
             break
         }
-        return URL(string: "https://api.themoviedb.org/3")!.addQuery(queries: ["api_key": "4de371dea47b9a5dcd86c1cf83c48d4e"])
+        return url
     }
 }
 

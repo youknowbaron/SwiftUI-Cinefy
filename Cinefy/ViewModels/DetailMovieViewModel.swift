@@ -27,6 +27,10 @@ class DetailMovieViewModel : ObservableObject {
         self.detailMovie = movie
     }
     
+    deinit {
+        cancellables.forEach { cancellable in cancellable.cancel() }
+    }
+    
     func getDetailMovie(id: Int) {
         let cancellable = apiService.request(.getMovieDetail(id), dataType: Movie.self)
             .sink { status in

@@ -33,6 +33,12 @@ struct MoviesScreen: View {
                                         viewModel.changePopularMovie()
                                     }
                                     .animation(.linear)
+                                    .onAppear {
+                                        viewModel.startTimer()
+                                    }
+                                    .onDisappear {
+                                        viewModel.cancelTimer()
+                                    }
                                     
                             }
                             
@@ -74,9 +80,3 @@ struct MoviesScreen: View {
         }
     }
 }
-
-//struct MoviesScreen_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MoviesScreen()
-//    }
-//}

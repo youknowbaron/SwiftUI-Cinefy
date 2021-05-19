@@ -91,4 +91,15 @@ class MovieViewModel : ObservableObject {
     var orderNumberOfPopularMovie: Int {
        popularMovies.firstIndex(matching: popularMovie!)! + 1
     }
+    
+    func startTimer() {
+        timer = Timer.publish(every: 10, on: .main, in: .common)
+            .autoconnect()
+        print("Start timer \(timer)")
+    }
+
+    func cancelTimer() {
+        timer.upstream.connect().cancel()
+        print("Cancel timer \(timer)")
+    }
 }

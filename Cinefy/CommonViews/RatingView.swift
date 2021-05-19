@@ -13,21 +13,25 @@ struct RatingView: View {
     var rating: Int
     var rawRating: Double
     var insertSpacer: Bool
+    var isSmallUI: Bool
     
-    init(_ rating: Double, insertSpacer: Bool = false) {
+    init(_ rating: Double, insertSpacer: Bool = false, isSmallUI: Bool = false) {
         self.rawRating = rating
         self.rating = Int(round(rating) / 2)
         self.insertSpacer = insertSpacer
+        self.isSmallUI = isSmallUI
     }
     
     var body: some View {
 
         return HStack(spacing: 5) {
             
+            let size: CGFloat = isSmallUI ? 14.0 : 20.0
+            
             ForEach(1..<6) { number in
                 let color = number <= rating ? Color(0xF79E44) : Color(0x444F61)
                 Image(systemName: "star.fill")
-                    .frame(width: 20, height: 20)
+                    .frame(width: size, height: size)
                     .foregroundColor(color)
             }
             
@@ -38,7 +42,7 @@ struct RatingView: View {
             Text(String(rawRating))
                 .foregroundColor(Color(0xF79E44))
                 .padding(.leading, 5)
-                .font(.system(size: 20, weight: .semibold))
+                .font(.system(size: size, weight: .semibold))
         }
     }
 }

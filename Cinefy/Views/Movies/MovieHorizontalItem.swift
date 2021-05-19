@@ -16,7 +16,7 @@ struct MovieHorizontalItem: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             
-        WebImage(url: URL(string: movie.posterPath.addImageUrl(quality: 300)))
+        WebImage(url: URL(string: movie.posterPath!.addImageUrl(quality: 300)))
             .resizable()
             .scaledToFill()
             .frame(width: !isPopular ? 125 : 170, height: !isPopular ? 180 : 240)

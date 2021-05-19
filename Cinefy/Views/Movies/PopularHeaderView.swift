@@ -19,7 +19,7 @@ struct PopularHeaderView: View {
             
             ZStack(alignment: .bottom) {
                 
-                WebImage(url: URL(string: movie.posterPath.addImageUrl(quality: 500))!)
+                WebImage(url: URL(string: movie.posterPath!.addImageUrl(quality: 500))!)
                     .resizable()
                     .frame(width: geometry.size.width, height: geometry.size.width * 1.5)
                     .scaledToFit()
@@ -70,7 +70,7 @@ struct PopularHeaderView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: DetailMovieScreen(movie: movie)) {
+                        NavigationLink(destination: DetailMovieScreen(movie: movie.copy())) {
                             VStack(spacing: 5) {
                                 Image(systemName: "info.circle")
                                 Text("Info")

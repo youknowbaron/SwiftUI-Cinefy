@@ -28,7 +28,7 @@ struct DetailMovieScreen: View {
                 ZStack(alignment: .topLeading) {
                     Color.bgColor
                     
-                    WebImage(url: URL(string: movie.posterPath.addImageUrl(quality: 500))!)
+                    WebImage(url: URL(string: movie.posterPath!.addImageUrl(quality: 500))!)
                         .resizable()
                         .frame(width: width, height: width * 1.5)
                         .scaledToFit()

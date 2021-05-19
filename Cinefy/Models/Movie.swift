@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Movie
 struct Movie: Codable, Identifiable {
     let adult: Bool
-    let backdropPath: String
+    let backdropPath: String?
     let genreIDS: [Int]?
     let budget: Int?
     let genres: [Genre]?
@@ -19,7 +19,8 @@ struct Movie: Codable, Identifiable {
     let imdbID: String?
     let originalLanguage, originalTitle, overview: String
     let popularity: Double
-    let posterPath, releaseDate, title: String
+    let posterPath: String?
+    let releaseDate, title: String
     let video: Bool
     let voteAverage: Double
     let voteCount: Int
@@ -46,5 +47,9 @@ struct Movie: Codable, Identifiable {
         case productionCountries = "production_countries"
         case revenue, runtime
         case spokenLanguages = "spoken_languages"
+    }
+
+    func copy() -> Movie {
+        return Movie(adult: adult, backdropPath: backdropPath, genreIDS: genreIDS, budget: budget, genres: genres, homepage: homepage, id: id, imdbID: imdbID, originalLanguage: originalLanguage, originalTitle: originalTitle, overview: overview, popularity: popularity, posterPath: posterPath, releaseDate: releaseDate, title: title, video: video, voteAverage: voteAverage, voteCount: voteCount, productionCompanies: productionCompanies, productionCountries: productionCountries, revenue: revenue, runtime: runtime, spokenLanguages: spokenLanguages)
     }
 }

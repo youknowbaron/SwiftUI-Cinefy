@@ -21,11 +21,11 @@ struct HomeTopBar: View {
             
             Spacer()
             
-            Image(systemName: "magnifyingglass")
-                .padding()
-                .onTapGesture {
-                    
-                }
+            NavigationLink(destination: SearchScreen()) {
+                Image(systemName: "magnifyingglass")
+                    .padding()
+            }
+            
             
             Image(systemName: "arrow.uturn.right")
                 .padding()
