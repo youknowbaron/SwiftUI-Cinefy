@@ -16,55 +16,41 @@ struct SearchScreen: View {
     
     var body: some View {
         
-        NavigationView {
-            ZStack(alignment: .top) {
-                Color.bgColor.ignoresSafeArea()
+        ZStack(alignment: .top) {
+            Color.bgColor.ignoresSafeArea()
+            
+            VStack(alignment: .leading) {
+                SearchField(
+                    searchTextWrapper: viewModel,
+                    placeholder: "Search any movies or person",
+                    isSearching: $isSearching
+                )
                 
-                VStack(alignment: .leading) {
-                    SearchField(
-                        searchTextWrapper: viewModel,
-                        placeholder: "Search any movies or person",
-                        isSearching: $isSearching
-                    )
-                    
-                    ScrollView {
-                        VStack(alignment: .leading) {
-                            
-                            ForEach(viewModel.searchedKeywords) { keyword in
-                                Text(keyword.name)
-                                    .padding(.vertical, 5)
-                                    .padding(.horizontal, 15)
-                                    .onTapGesture {
-                                        viewModel.searchText = keyword.name
-                                    }
-                            }
-                            
-                            HStack {
-                                Text("Movies")
-                                    .font(.system(size: 16, weight: .medium))
-                                    .padding(15)
-                                
-                                Spacer()
-                            }
-                            .background(Color.overlayColor)
-                            
-                            ForEach(viewModel.searchedMovies) { movie in
-                                NavigationLink(destination: DetailMovieScreen(movie: movie)) {
-                                    MovieRow(movie: movie)
-                                        .padding(.horizontal, 15)
+                ScrollView {
+                    VStack(alignment: .leading) {
+                        
+                        ForEach(viewModel.searchedKeywords) { keyword in
+                            Text(keyword.name)
+                                .padding(.vertical, 5)
+                                .padding(.horizontal, 15)
+                                .onTapGesture {
+                                    viewModel.searchText = keyword.name
                                 }
-                            }
                         }
                         
+                        
+                        ForEach(viewModel.searchedMovies) { movie in
+                            NavigationLink(destination: DetailMovieScreen(movie: movie)) {
+                                MovieRow(movie: movie)
+                                    .padding(.horizontal, 15)
+                            }
+                        }
                     }
-                    
-                    
-                    
                 }
             }
+            
             .foregroundColor(.textColor)
-            .navigationTitle("")
-            .navigationBarHidden(true)
+            .navigationBarTitle("Search")
         }
     }
 }

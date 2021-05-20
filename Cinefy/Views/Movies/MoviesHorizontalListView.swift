@@ -17,7 +17,11 @@ struct MoviesHorizontalListView: View {
             HStack(spacing: 0) {
                 
                 ForEach(movies) { movie in
-                    NavigationLink(destination: DetailMovieScreen(movie: movie)) {
+                    NavigationLink(
+                        destination: DetailMovieScreen(movie: movie)
+                            .navigationBarTitle("")
+                            .navigationBarHidden(true)
+                    ) {
                         MovieHorizontalItem(movie: movie, isPopular: isPopular)
                             .padding(.horizontal, 5)
                     }

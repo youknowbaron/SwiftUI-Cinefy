@@ -13,6 +13,7 @@ struct MoviesScreen: View {
     @ObservedObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
     
     var body: some View {
+        
         NavigationView {
             
             GeometryReader { geometry in
@@ -39,7 +40,7 @@ struct MoviesScreen: View {
                                     .onDisappear {
                                         viewModel.cancelTimer()
                                     }
-                                    
+                                
                             }
                             
                             Text("Now Playing")
@@ -63,13 +64,27 @@ struct MoviesScreen: View {
                         .padding(.bottom, 40)
                     }
                     .ignoresSafeArea()
-                    
-                    HomeTopBar {
-                        presentationMode.wrappedValue.dismiss()
-                    }
                 }
                 .navigationBarTitle("")
-                .navigationBarHidden(true)
+                .navigationBarBackButtonHidden(true)
+                .navigationBarItems(
+                    leading: Image("logo_cinefy")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100),
+                    trailing: HStack {
+                        NavigationLink(destination: SearchScreen()) {
+                            Image(systemName: "magnifyingglass")
+                                .padding()
+                        }
+                        
+                        Image(systemName: "arrow.uturn.right")
+                            .padding()
+                            .onTapGesture {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                    }
+                )
                 .foregroundColor(.textColor)
             }
         }

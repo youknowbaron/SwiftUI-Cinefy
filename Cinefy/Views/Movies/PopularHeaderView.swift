@@ -70,7 +70,11 @@ struct PopularHeaderView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: DetailMovieScreen(movie: movie.copy())) {
+                        NavigationLink(
+                            destination: DetailMovieScreen(movie: movie)
+                                .navigationBarTitle("")
+                                .navigationBarHidden(true)
+                        ) {
                             VStack(spacing: 5) {
                                 Image(systemName: "info.circle")
                                 Text("Info")
