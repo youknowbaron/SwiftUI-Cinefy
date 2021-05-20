@@ -9,11 +9,11 @@ import SwiftUI
 
 extension Color {
     
-    static let bgColor = Color(0x17082A)
+    static let bgColor = Color.black
     static let textColor = Color.white
     static let subTextColor = Color.white.opacity(0.7)
-    static let overlayColor = Color(0x210F37)
-    static let buttonColor = Color(0x6644B8)
+    static let overlayColor = Color.gray.opacity(0.15)
+    static let buttonColor = Color(0xF79E44) // 0x6644B8
     static let highlightColor = Color(0xF79E44)
     
     init(_ hex: UInt32, opacity:Double = 1.0) {

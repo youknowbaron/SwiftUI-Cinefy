@@ -20,6 +20,7 @@
 		FE58845F265504060016E747 /* KeywordsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE58845E265504060016E747 /* KeywordsResponse.swift */; };
 		FE5884612655172A0016E747 /* MovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE5884602655172A0016E747 /* MovieRow.swift */; };
 		FE58846326551B860016E747 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE58846226551B860016E747 /* ArrayExtension.swift */; };
+		FE588465265618280016E747 /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE588464265618280016E747 /* MainScreen.swift */; };
 		FE78DBED265204A300A7FE3C /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBEC265204A300A7FE3C /* TokenResponse.swift */; };
 		FE78DBEF2652110500A7FE3C /* SessionIDResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBEE2652110500A7FE3C /* SessionIDResponse.swift */; };
 		FE78DBF126521A8300A7FE3C /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBF026521A8300A7FE3C /* ViewExtensions.swift */; };
@@ -49,7 +50,7 @@
 		FED7D903264BBEC600254BD1 /* cinema.json in Resources */ = {isa = PBXBuildFile; fileRef = FED7D902264BBEC600254BD1 /* cinema.json */; };
 		FED7D906264BC3D800254BD1 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D905264BC3D800254BD1 /* LoginScreen.swift */; };
 		FED7D908264BC59D00254BD1 /* MyColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D907264BC59D00254BD1 /* MyColors.swift */; };
-		FED7D90B264BC6CD00254BD1 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D90A264BC6CD00254BD1 /* ColorExtension.swift */; };
+		FED7D90B264BC6CD00254BD1 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D90A264BC6CD00254BD1 /* ColorExtensions.swift */; };
 		FED7D911264CCADC00254BD1 /* MoviesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D910264CCADC00254BD1 /* MoviesResponse.swift */; };
 		FED7D914264CDA4A00254BD1 /* APIBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D913264CDA4A00254BD1 /* APIBuilder.swift */; };
 		FED7D916264CDBD000254BD1 /* APIError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FED7D915264CDBD000254BD1 /* APIError.swift */; };
@@ -79,6 +80,7 @@
 		FE58845E265504060016E747 /* KeywordsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeywordsResponse.swift; sourceTree = "<group>"; };
 		FE5884602655172A0016E747 /* MovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRow.swift; sourceTree = "<group>"; };
 		FE58846226551B860016E747 /* ArrayExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
+		FE588464265618280016E747 /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		FE78DBEC265204A300A7FE3C /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		FE78DBEE2652110500A7FE3C /* SessionIDResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionIDResponse.swift; sourceTree = "<group>"; };
 		FE78DBF026521A8300A7FE3C /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -108,7 +110,7 @@
 		FED7D902264BBEC600254BD1 /* cinema.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cinema.json; sourceTree = "<group>"; };
 		FED7D905264BC3D800254BD1 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		FED7D907264BC59D00254BD1 /* MyColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyColors.swift; sourceTree = "<group>"; };
-		FED7D90A264BC6CD00254BD1 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		FED7D90A264BC6CD00254BD1 /* ColorExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		FED7D910264CCADC00254BD1 /* MoviesResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesResponse.swift; sourceTree = "<group>"; };
 		FED7D913264CDA4A00254BD1 /* APIBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIBuilder.swift; sourceTree = "<group>"; };
 		FED7D915264CDBD000254BD1 /* APIError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIError.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				FE5884552654C5A90016E747 /* Search */,
 				FED7D8FD264BBDC200254BD1 /* SplashScreen.swift */,
 				FED7D905264BC3D800254BD1 /* LoginScreen.swift */,
+				FE588464265618280016E747 /* MainScreen.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -234,7 +237,7 @@
 		FED7D909264BC69700254BD1 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				FED7D90A264BC6CD00254BD1 /* ColorExtension.swift */,
+				FED7D90A264BC6CD00254BD1 /* ColorExtensions.swift */,
 				FE78DBF026521A8300A7FE3C /* ViewExtensions.swift */,
 				FE78DBFC26535E0F00A7FE3C /* StringExtensions.swift */,
 				FE58846226551B860016E747 /* ArrayExtension.swift */,
@@ -406,6 +409,7 @@
 				FEB9C2D5264E2A2D00B7AD0E /* PlaceholderImage.swift in Sources */,
 				FE78DC0A2653953C00A7FE3C /* PopularHeaderView.swift in Sources */,
 				FED7D8FE264BBDC200254BD1 /* SplashScreen.swift in Sources */,
+				FE588465265618280016E747 /* MainScreen.swift in Sources */,
 				FE57B012264E584700D943D0 /* OverlayButton.swift in Sources */,
 				FE58846326551B860016E747 /* ArrayExtension.swift in Sources */,
 				FE78DBFD26535E0F00A7FE3C /* StringExtensions.swift in Sources */,
@@ -420,7 +424,7 @@
 				FED7D91A264CDF3300254BD1 /* ResultState.swift in Sources */,
 				FED7D926264D08E200254BD1 /* RatingView.swift in Sources */,
 				FE78DC0C2653A0F600A7FE3C /* MoviesHorizontalListView.swift in Sources */,
-				FED7D90B264BC6CD00254BD1 /* ColorExtension.swift in Sources */,
+				FED7D90B264BC6CD00254BD1 /* ColorExtensions.swift in Sources */,
 				FE78DC102653A1BB00A7FE3C /* Top10Badge.swift in Sources */,
 				FE78DBFF2653614200A7FE3C /* Cast.swift in Sources */,
 				FE5884572654C5C00016E747 /* SearchField.swift in Sources */,

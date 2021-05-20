@@ -62,7 +62,7 @@ struct LoginScreen: View {
         .onAppear {
             viewModel.getRquestToken()
         }
-        .navigate(to: MoviesScreen(), when: .constant(viewModel.isLoginSuccess))
+        .navigate(to: MainScreen(), when: .constant(viewModel.isLoginSuccess))
     }
 }
 

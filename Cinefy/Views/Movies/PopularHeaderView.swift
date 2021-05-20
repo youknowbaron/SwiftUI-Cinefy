@@ -53,8 +53,8 @@ struct PopularHeaderView: View {
                             Image(systemName: "plus")
                             Text("Watchlist")
                                 .font(.system(size: 12, weight: .light))
-                                .foregroundColor(.subTextColor)
                         }
+                        .foregroundColor(.subTextColor)
                         Spacer()
                         
                         HStack(spacing: 10) {
@@ -72,15 +72,13 @@ struct PopularHeaderView: View {
                         
                         NavigationLink(
                             destination: DetailMovieScreen(movie: movie)
-                                .navigationBarTitle("")
-                                .navigationBarHidden(true)
                         ) {
                             VStack(spacing: 5) {
                                 Image(systemName: "info.circle")
                                 Text("Info")
                                     .font(.system(size: 12, weight: .light))
-                                    .foregroundColor(.subTextColor)
                             }
+                            .foregroundColor(.subTextColor)
                             .padding()
                         }
                         

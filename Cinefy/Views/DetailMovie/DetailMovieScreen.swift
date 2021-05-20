@@ -25,7 +25,6 @@ struct DetailMovieScreen: View {
             let width = geometry.size.width
             
             ZStack(alignment: .topLeading) {
-                Color.bgColor
                 
                 WebImage(url: URL(string: movie.posterPath!.addImageUrl(quality: 500))!)
                     .resizable()
@@ -38,17 +37,14 @@ struct DetailMovieScreen: View {
                     contentView(movie: movie)
                         .padding(.top, width / 2)
                 }
-                .ignoresSafeArea()
-                
-                HStack {
-                    Spacer()
-                    closeButton
-                        .padding(.horizontal, 15)
-                }
-                
+                .ignoresSafeArea(edges: .top)
+            
             }
             .foregroundColor(.textColor)
         }
+        .navigationBarTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarItems(leading: closeButton)
         .onAppear {
             viewModel.getDetailMovie(id: movie.id)
             viewModel.getCast(id: movie.id)
@@ -57,7 +53,7 @@ struct DetailMovieScreen: View {
     
     var closeButton: some View {
         Image(systemName: "multiply")
-            .buttify(backgroundColor: .white.opacity(0.17), padding: 15)
+            .padding()
             .onTapGesture {
                 presentationMode.wrappedValue.dismiss()
             }

@@ -36,21 +36,11 @@ public struct SearchField : View {
     public var body: some View {
         GeometryReader { reader in
             HStack(alignment: .center, spacing: 0) {
+                Image(systemName: "magnifyingglass")
                 TextField(self.placeholder,
                           text: self.$searchTextWrapper.searchText)
-                    .foregroundColor(.textColor)
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 28)
-                    .background(Color.overlayColor)
-                    .cornerRadius(4)
-                    .padding(.horizontal, 5)
-                    .overlay(
-                        HStack {
-                            Image(systemName: "magnifyingglass")
-                                .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                .padding(.leading, 10)
-                        }
-                    )
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding(.horizontal)
                 if !self.searchTextWrapper.searchText.isEmpty {
                     Button(action: {
                         self.searchTextWrapper.searchText = ""
