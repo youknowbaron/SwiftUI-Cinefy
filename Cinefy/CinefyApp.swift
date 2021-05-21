@@ -12,6 +12,7 @@ struct CinefyApp: App {
     
     init() {
         setupApperance()
+        UserState.initialize()
     }
     
     var body: some Scene {

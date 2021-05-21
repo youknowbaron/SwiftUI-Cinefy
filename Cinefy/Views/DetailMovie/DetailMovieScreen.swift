@@ -45,6 +45,7 @@ struct DetailMovieScreen: View {
         .onAppear {
             viewModel.getDetailMovie(id: movie.id)
             viewModel.getCast(id: movie.id)
+            viewModel.getMovieState(id: movie.id)
         }
     }
     
@@ -76,11 +77,21 @@ struct DetailMovieScreen: View {
                 MyButton("Watch movie") {}
                 
                 HStack {
-                    Image(systemName: "arrow.down")
+                    Image(systemName:
+                            viewModel.isAdded2Watchlist ? "checkmark" : "plus")
+                        .foregroundColor(viewModel.isAdded2Watchlist ? .highlightColor : nil)
                         .buttify()
+                        .onTapGesture {
+                            viewModel.addToWatchlist(mediaId: movie.id)
+                        }
+                    
                     Spacer()
-                    Image(systemName: "heart")
+                    Image(systemName: viewModel.isFavorited ? "heart.fill" : "heart")
+                        .foregroundColor(viewModel.isFavorited ? .highlightColor : nil)
                         .buttify()
+                        .onTapGesture {
+                            viewModel.markAsFavorite(mediaId: movie.id)
+                        }
                     Spacer()
                     Image(systemName: "arrowshape.turn.up.right")
                         .buttify()

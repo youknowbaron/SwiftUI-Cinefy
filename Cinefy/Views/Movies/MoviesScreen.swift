@@ -12,6 +12,7 @@ struct MoviesScreen: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
     @State var showLogInSheet = false
+    @State var account = UserState.account
     
     var body: some View {
         
@@ -75,16 +76,21 @@ struct MoviesScreen: View {
                                 .padding()
                         }
                         
-                        Image(systemName: "arrow.uturn.right")
-                            .padding()
-                            .onTapGesture {
-                                onAccountTap()
+                        if UserState.isLogin {
+                            NavigationLink(destination: AccountScreen { account = nil } ) {
+                                avatar
+                            }
+                        } else {
+                            Button("Login") {
+                                showLogInSheet = true
                             }
                             .sheet(isPresented: $showLogInSheet) {
-                                LoginSheet {
+                                LoginSheet { account in
+                                    self.account = account
                                     print("Callback login success in MoviesScreen")
                                 }
                             }
+                        }
                     }
                     .foregroundColor(.textColor)
                 )
@@ -98,7 +104,9 @@ struct MoviesScreen: View {
         }
     }
     
-    func onAccountTap() {
-        showLogInSheet = true
+    var avatar: some View {
+        AvatarView(url: account?.avatar.tmdb.avatarPath)
+            
     }
+    
 }

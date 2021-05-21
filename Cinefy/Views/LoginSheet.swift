@@ -16,7 +16,7 @@ struct LoginSheet: View {
     @State var username: String = "patricklagger"
     @State var password: String = "31121995"
     
-    var onLoginSuccess: () -> Void
+    var onLoginSuccess: (Account) -> Void
     
     var body: some View {
         ZStack {
@@ -49,12 +49,10 @@ struct LoginSheet: View {
                             dismissButton: .default(Text("OK"))
                         )
                     }
-                    .onReceive(viewModel.loginSubject) { value in
-                        print("Receive \(value)")
-                        if value == true {
-                            presentationMode.wrappedValue.dismiss()
-                            onLoginSuccess()
-                        }
+                    .onReceive(viewModel.loginSubject) { account in
+                        print("Receive \(account)")
+                        presentationMode.wrappedValue.dismiss()
+                        onLoginSuccess(account)
                     }
                 }
                 .padding(25)

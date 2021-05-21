@@ -21,7 +21,7 @@ class LoginViewModel: ObservableObject {
         cancellables.forEach { $0.cancel() }
     }
     
-    let loginSubject = PassthroughSubject<Bool, Never>()
+    let loginSubject = PassthroughSubject<Account, Never>()
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -36,7 +36,6 @@ class LoginViewModel: ObservableObject {
                 break
             case .success:
                 shouldShowAlert = false
-                loginSubject.send(true)
                 break
             case .none:
                 break
@@ -95,7 +94,6 @@ class LoginViewModel: ObservableObject {
             .sink { status in
                 switch status {
                 case .finished:
-                    self.state = .success(data: true)
                     break
                 case .failure(let error):
                     print("[Error] createSession: \(error.errorDescription ?? "")")
@@ -104,8 +102,32 @@ class LoginViewModel: ObservableObject {
                 }
             } receiveValue: { value in
                 UserDefaults.standard.set(value.sessionID, forKey: "session_id")
+                UserState.sessionID = value.sessionID
                 print("SessionID: \(value.sessionID)")
+                self.getAccountDetail(sessionId: value.sessionID)
             }
+        cancellables.insert(cancellable)
+    }
+    
+    private func getAccountDetail(sessionId: String) {
+        let cancellable = apiService.request(.getDetailAccount(sessionId: sessionId), dataType: Account.self)
+            .sink { status in
+                switch status {
+                case .finished:
+                    self.state = .success(data: true)
+                    break
+                case .failure(let error):
+                    print("[Error] getAccount: \(error.errorDescription ?? "")")
+                    self.state = .failed(error: error)
+                    break
+                }
+            } receiveValue: { account in
+                UserDefaults.standard.set(account.json, forKey: "account")
+                UserState.account = account
+                self.loginSubject.send(account)
+                print("Account Detail: \(account)")
+            }
+        
         cancellables.insert(cancellable)
     }
 }

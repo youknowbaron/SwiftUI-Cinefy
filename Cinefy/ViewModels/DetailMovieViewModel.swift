@@ -22,6 +22,10 @@ class DetailMovieViewModel : ObservableObject {
     @Published private(set) var recommendations: [Movie] = []
     @Published private(set) var similar: [Movie] = []
     
+    @Published private(set) var isFavorited = false
+    @Published private(set) var isAdded2Watchlist = false
+    @Published private(set) var movieState: MovieState?
+    
     init(apiService: APIService) {
         print("[init] DetailMovieViewModel")
         self.apiService = apiService
@@ -117,6 +121,49 @@ class DetailMovieViewModel : ObservableObject {
                 }
             } receiveValue: { value in
                 self.similar = value.results
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    func markAsFavorite(mediaType: String = "movie", mediaId: Int) {
+        guard UserState.isLogin else { return }
+        self.isFavorited.toggle()
+        let cancellable = apiService.request(
+            .markAsFavorite(
+                accountId: UserState.account!.id,
+                sessionId: UserState.sessionID!,
+                body: ["media_type": mediaType, "media_id": mediaId, "favorite": self.isFavorited]
+            ), dataType: MessageResponse.self)
+            .sink { status in } receiveValue: { value in
+                print("markAsFavorite \(value)")
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    
+    func addToWatchlist(mediaType: String = "movie", mediaId: Int) {
+        guard UserState.isLogin else { return }
+        self.isAdded2Watchlist.toggle()
+        let cancellable = apiService.request(
+            .addToWatchlist(
+                accountId: UserState.account!.id,
+                sessionId: UserState.sessionID!,
+                body: ["media_type": mediaType, "media_id": mediaId, "watchlist": self.isAdded2Watchlist]
+            ), dataType: MessageResponse.self)
+            .sink { status in print(status) } receiveValue: { value in
+                print("addToWatchlist \(value)")
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    func getMovieState(id: Int) {
+        guard UserState.isLogin else { return }
+        let cancellable = apiService.request(.getMovieState(id: id, sessionId: UserState.sessionID!), dataType: MovieState.self)
+            .sink { status in
+                print(status)
+            } receiveValue: { value in
+                self.isFavorited = value.favorite
+                self.isAdded2Watchlist = value.watchlist
             }
         cancellables.insert(cancellable)
     }

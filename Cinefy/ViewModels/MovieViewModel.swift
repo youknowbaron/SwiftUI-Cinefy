@@ -101,11 +101,9 @@ class MovieViewModel : ObservableObject {
     func startTimer() {
         timer = Timer.publish(every: 10, on: .main, in: .common)
             .autoconnect()
-        print("Start timer \(timer)")
     }
 
     func cancelTimer() {
         timer.upstream.connect().cancel()
-        print("Cancel timer \(timer)")
     }
 }

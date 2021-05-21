@@ -10,7 +10,7 @@ import SwiftUI
 struct MainScreen: View {
     
     enum Tab {
-        case movies, watchlist
+        case movies, love, watchlist
     }
     
     @State private var selectingTab = Tab.movies
@@ -30,7 +30,10 @@ struct MainScreen: View {
             MoviesScreen()
                 .tabItem { tabItem(text: "Movies", image: "film") }
                 .tag(Tab.movies)
-            Text("Watchlist")
+            FavoriteScreen()
+                .tabItem { tabItem(text: "Favorites", image: "heart")}
+                .tag(Tab.love)
+            WatchlistScreen()
                 .tabItem { tabItem(text: "Watchlist", image: "checkmark.rectangle") }
                 .tag(Tab.watchlist)
         }

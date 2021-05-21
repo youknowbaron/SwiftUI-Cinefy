@@ -14,12 +14,14 @@ struct RatingView: View {
     var rawRating: Double
     var insertSpacer: Bool
     var isSmallUI: Bool
+    var voteCount: Int?
     
-    init(_ rating: Double, insertSpacer: Bool = false, isSmallUI: Bool = false) {
+    init(_ rating: Double, insertSpacer: Bool = false, isSmallUI: Bool = false, voteCount: Int? = nil) {
         self.rawRating = rating
         self.rating = Int(round(rating) / 2)
         self.insertSpacer = insertSpacer
         self.isSmallUI = isSmallUI
+        self.voteCount = voteCount
     }
     
     var body: some View {
@@ -39,7 +41,7 @@ struct RatingView: View {
                 Spacer()
             }
             
-            Text(String(rawRating))
+            Text(voteCount != nil ? String(voteCount!) : String(rawRating))
                 .foregroundColor(Color(0xF79E44))
                 .padding(.leading, 5)
                 .font(.system(size: size, weight: .semibold))

@@ -20,11 +20,19 @@ enum CinefyApi {
     // MARK: - API: Authentication
     case requestToken
     
-    case createSession(body: [String: String])
+    case createSession(body: [String: Any])
     
-    case createSessionWithLogin(body: [String: String])
+    case createSessionWithLogin(body: [String: Any])
     
     case getDetailAccount(sessionId: String)
+    
+    case markAsFavorite(accountId: Int, sessionId: String, body:[String:Any])
+    
+    case addToWatchlist(accountId: Int, sessionId: String, body:[String:Any])
+    
+    case getFavoriteMovies(accountId: Int, sessionId: String)
+    
+    case getWatchlistMovies(accountId: Int, sessionId: String)
     
     // MARK: - API: Movies
     case getNowPlayingMovies
@@ -42,6 +50,8 @@ enum CinefyApi {
     case getRecommendations(movieId: Int)
     
     case getSimilar(movieId: Int)
+    
+    case getMovieState(id: Int, sessionId: String)
     
     // MARK: - API: Search
     
@@ -61,7 +71,8 @@ extension CinefyApi : APIBuilder {
     var urlRequest: URLRequest {
         var urlRequest = URLRequest(url: baseUrl.appendingPathComponent(path))
         switch self {
-        case .createSession(let body), .createSessionWithLogin(let body):
+        case .createSession(let body), .createSessionWithLogin(let body),
+             .markAsFavorite(_, _, let body), .addToWatchlist(_, _, let body):
             let jsonBody = try! JSONSerialization.data(withJSONObject: body)
             urlRequest.httpMethod = "POST"
             urlRequest.httpBody = jsonBody
@@ -83,6 +94,14 @@ extension CinefyApi : APIBuilder {
             return "authentication/token/validate_with_login"
         case .getDetailAccount(_):
             return "account"
+        case .markAsFavorite(let accountId, _, _):
+            return "/account/\(accountId)/favorite"
+        case .addToWatchlist(let accountId, _, _):
+            return "/account/\(accountId)/watchlist"
+        case .getFavoriteMovies(let accountId, _):
+            return "/account/\(accountId)/favorite/movies"
+        case .getWatchlistMovies(let accountId, _):
+            return "/account/\(accountId)/watchlist/movies"
         // MARK: - Path: Movies
         case .getNowPlayingMovies:
             return "movie/now_playing"
@@ -100,6 +119,8 @@ extension CinefyApi : APIBuilder {
             return "movie/\(id)/recommendations"
         case .getSimilar(let id):
             return "movie/\(id)/similar"
+        case .getMovieState(let id, _):
+            return "movie/\(id)/account_states"
         // MARK: - Path: Search
         case .searchMulti(_):
             return "search/multi"
@@ -118,7 +139,9 @@ extension CinefyApi : APIBuilder {
     var baseUrl: URL {
         var url = URL(string: "https://api.themoviedb.org/3")!.addQuery(queries: ["api_key": "4de371dea47b9a5dcd86c1cf83c48d4e"])
         switch self {
-        case .getDetailAccount(let sessionId):
+        case .getDetailAccount(let sessionId), .addToWatchlist(_, let sessionId, _),
+             .markAsFavorite(_, let sessionId, _), .getMovieState(_, let sessionId),
+             .getFavoriteMovies(_, let sessionId), .getWatchlistMovies(_, let sessionId):
             url = url.addQuery(queries: ["session_id" : sessionId])
             break
         case .searchMulti(let query), .searchKeyword(let query), .searchPeople(let query), .searchMovie(let query):

@@ -5,6 +5,7 @@
 //  Created by vobach on 19/05/2021.
 //
 
+import AVKit
 import SwiftUI
 import SDWebImageSwiftUI
 
@@ -28,7 +29,7 @@ struct MovieRow: View {
                     .font(.system(size: 16, weight: .medium))
                     .foregroundColor(.textColor)
                     .lineLimit(2)
-                RatingView(movie.popularity, isSmallUI: true)
+                RatingView(movie.voteAverage, isSmallUI: true, voteCount: movie.voteCount)
                 Text(movie.overview)
                     .foregroundColor(.subTextColor)
                     .lineLimit(3)
