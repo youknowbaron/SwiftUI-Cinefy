@@ -11,7 +11,7 @@ struct SearchScreen: View {
     
     @State private var query: String = ""
     
-    @ObservedObject private var viewModel = SearchViewModel(apiService: APIServiceImpl())
+    @StateObject private var viewModel = SearchViewModel(apiService: APIServiceImpl())
     @State private var isSearching = false
     
     var body: some View {

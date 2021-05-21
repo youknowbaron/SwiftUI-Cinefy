@@ -16,18 +16,19 @@ class DetailMovieViewModel : ObservableObject {
     
     @Published private(set) var state: ResultState<Movie> = .loading
     
-    @Published private(set) var detailMovie: Movie
+    @Published private(set) var detailMovie: Movie?
     @Published private(set) var cast: [Cast] = []
     @Published private(set) var reviews: [Review] = []
     @Published private(set) var recommendations: [Movie] = []
     @Published private(set) var similar: [Movie] = []
     
-    init(apiService: APIService, movie: Movie) {
+    init(apiService: APIService) {
+        print("[init] DetailMovieViewModel")
         self.apiService = apiService
-        self.detailMovie = movie
     }
     
     deinit {
+        print("[deinit] DetailMovieViewModel")
         cancellables.forEach { cancellable in cancellable.cancel() }
     }
     
@@ -60,15 +61,11 @@ class DetailMovieViewModel : ObservableObject {
                     break
                 }
             } receiveValue: { value in
-                var sortedCast = value.cast
+                self.cast = value.cast
                     .filter { cast in cast.profilePath != nil }
                     .sorted { cast1, cast2 -> Bool in
                         cast1.popularity > cast2.popularity
                     }
-                if sortedCast.count > 5 {
-                    sortedCast.removeLast(sortedCast.count - 5)
-                }
-                self.cast = sortedCast
             }
         cancellables.insert(cancellable)
     }

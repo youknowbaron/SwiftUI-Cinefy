@@ -9,11 +9,20 @@ import SwiftUI
 
 @main
 struct CinefyApp: App {
+    
+    init() {
+        setupApperance()
+    }
+    
     var body: some Scene {
         WindowGroup {
             MainScreen()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
         }
+    }
+    
+    private func setupApperance() {
+        UIWindow.appearance().tintColor = UIColor(named: "steam_gold")
     }
 }
 

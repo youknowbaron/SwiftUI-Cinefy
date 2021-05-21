@@ -11,15 +11,12 @@ import SDWebImageSwiftUI
 struct DetailMovieScreen: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel : DetailMovieViewModel
+    @StateObject var viewModel = DetailMovieViewModel(apiService: APIServiceImpl())
     
-    init(movie: Movie) {
-        self.viewModel = DetailMovieViewModel(apiService: APIServiceImpl(), movie: movie)
-    }
+    var movie: Movie
     
     var body: some View {
-        
-        let movie = viewModel.detailMovie
+        let movie = viewModel.detailMovie ?? movie
         
         GeometryReader { geometry in
             let width = geometry.size.width
@@ -128,13 +125,25 @@ struct DetailMovieScreen: View {
                 .padding(20)
                 .overlyfy()
                 
-                Text("Cast")
-                    .font(.system(size: 16, weight: .medium))
+                HStack {
+                
+                    Text("Cast")
+                        .font(.system(size: 16, weight: .medium))
+                    
+                    Spacer()
+                    
+                    Button("See All") {
+                        
+                    }
+                    .foregroundColor(.highlightColor)
+                }
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 20) {
+                    HStack(spacing: 15) {
                         ForEach(viewModel.cast) { cast in
-                            CastItem(cast: cast)
+                            NavigationLink(destination: DetailCastScreen(cast: cast)) {
+                                CastItem(cast: cast)
+                            }
                         }
                     }
                 }

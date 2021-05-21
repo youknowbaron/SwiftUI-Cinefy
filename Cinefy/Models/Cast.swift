@@ -11,12 +11,17 @@ import Foundation
 struct Cast: Codable, Identifiable {
     let adult: Bool
     let gender, id: Int
-    let knownForDepartment, name, originalName: String
+    let knownForDepartment, name: String
+    let originalName: String?
     let popularity: Double
     let profilePath: String?
-    let castID: Int
-    let character, creditID: String
-    let order: Int
+    let castID: Int?
+    let character, creditID: String?
+    let order: Int?
+    
+    let alsoKnownAs: [String]?
+    let biography, deathday, birthday: String?
+    let placeOfBirth: String?
 
     enum CodingKeys: String, CodingKey {
         case adult, gender, id
@@ -29,5 +34,8 @@ struct Cast: Codable, Identifiable {
         case character
         case creditID = "credit_id"
         case order
+        case alsoKnownAs = "also_known_as"
+        case biography, deathday, birthday
+        case placeOfBirth = "place_of_birth"
     }
 }

@@ -17,15 +17,15 @@ struct CastItem: View {
         VStack(alignment: .leading, spacing: 10) {
             WebImage(url: URL(string: cast.profilePath!.addImageUrl(quality: 300)))
                 .resizable()
-                .scaledToFit()
-                .cornerRadius(10)
                 .frame(width: 135, height: 180)
+                .scaledToFill()
+                .cornerRadius(10)
             
             Text(cast.name)
                 .font(.system(size: 16, weight: .medium))
                 .lineLimit(2)
             
-            Text(cast.character)
+            Text(cast.character!)
                 .foregroundColor(.subTextColor)
                 .lineLimit(2)
         }

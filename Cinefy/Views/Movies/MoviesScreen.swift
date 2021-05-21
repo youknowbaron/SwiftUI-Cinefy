@@ -10,7 +10,8 @@ import SwiftUI
 struct MoviesScreen: View {
     
     @Environment(\.presentationMode) var presentationMode
-    @ObservedObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
+    @StateObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
+    @State var showLogInSheet = false
     
     var body: some View {
         
@@ -19,7 +20,6 @@ struct MoviesScreen: View {
             GeometryReader { geometry in
                 
                 let width = geometry.size.width
-                
                 
                 ScrollView {
                     
@@ -78,7 +78,12 @@ struct MoviesScreen: View {
                         Image(systemName: "arrow.uturn.right")
                             .padding()
                             .onTapGesture {
-                                presentationMode.wrappedValue.dismiss()
+                                onAccountTap()
+                            }
+                            .sheet(isPresented: $showLogInSheet) {
+                                LoginSheet {
+                                    print("Callback login success in MoviesScreen")
+                                }
                             }
                     }
                     .foregroundColor(.textColor)
@@ -91,5 +96,9 @@ struct MoviesScreen: View {
             viewModel.getNowPlayingMovies()
             viewModel.getUpcomingMovies()
         }
+    }
+    
+    func onAccountTap() {
+        showLogInSheet = true
     }
 }

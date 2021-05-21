@@ -16,34 +16,42 @@ class LoginViewModel: ObservableObject {
         self.apiService = apiService
     }
     
-    private var cancellables = Set<AnyCancellable>()
+    deinit {
+        print("deinit LoginViewModel")
+        cancellables.forEach { $0.cancel() }
+    }
     
-    private var requestToken: String?
+    let loginSubject = PassthroughSubject<Bool, Never>()
+    
+    private var cancellables = Set<AnyCancellable>()
     
     private(set) var state: ResultState<Bool>? {
         didSet {
             switch self.state {
             case .loading:
                 shouldShowAlert = false
-                isLoginSuccess = false
                 break
             case .failed(_):
-                isLoginSuccess = false
                 shouldShowAlert = true
                 break
             case .success:
-                isLoginSuccess = true
                 shouldShowAlert = false
+                loginSubject.send(true)
                 break
             case .none:
                 break
             }
         }
     }
-    @Published var isLoginSuccess: Bool = false
+    
     @Published var shouldShowAlert = false
     
-    func getRquestToken() {
+    func login(username: String, password: String) {
+        state = .loading
+        getRquestToken(username: username, password: password)
+    }
+    
+    private func getRquestToken(username: String, password: String) {
         let cancellable = apiService.request(.requestToken, dataType: TokenResponse.self)
             .sink { status in
                 switch status {
@@ -55,47 +63,42 @@ class LoginViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { value in
-                self.requestToken = value.requestToken
-                print("RequesToken: \(self.requestToken ?? "")")
+                print("RequesToken: \(value.requestToken)")
+                self.createSessionWithLogin(username: username, password: password, requestToken: value.requestToken)
             }
         
         cancellables.insert(cancellable)
     }
     
-    func login(username: String, password: String) {
-        state = .loading
-        createSessionWithLogin(username: username, password: password)
-    }
-    
-    private func createSessionWithLogin(username: String, password: String) {
+    private func createSessionWithLogin(username: String, password: String, requestToken: String) {
         let cancellable = apiService.request(
-            .createSessionWithLogin(body: ["username": username, "password": password, "request_token": requestToken ?? ""]),
+            .createSessionWithLogin(body: ["username": username, "password": password, "request_token": requestToken]),
             dataType: TokenResponse.self
         ).sink { status in
             switch status {
             case .finished:
                 break
             case .failure(let error):
-                print("Error: \(error.errorDescription ?? "")")
+                print("[Error] createSessionWithLogin: \(error.errorDescription ?? "")")
                 self.state = .failed(error: error)
                 break
             }
         } receiveValue: { value in
-            self.createSession()
+            self.createSession(requestToken: requestToken)
         }
         
         cancellables.insert(cancellable)
     }
     
-    private func createSession() {
-        let cancellable = apiService.request(.createSession(body: ["request_token" : requestToken ?? ""]), dataType: SessionIDResponse.self)
+    private func createSession(requestToken: String) {
+        let cancellable = apiService.request(.createSession(body: ["request_token": requestToken]), dataType: SessionIDResponse.self)
             .sink { status in
                 switch status {
                 case .finished:
                     self.state = .success(data: true)
                     break
                 case .failure(let error):
-                    print("Error: \(error.errorDescription ?? "")")
+                    print("[Error] createSession: \(error.errorDescription ?? "")")
                     self.state = .failed(error: error)
                     break
                 }

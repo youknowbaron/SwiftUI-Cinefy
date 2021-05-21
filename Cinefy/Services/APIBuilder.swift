@@ -43,6 +43,8 @@ enum CinefyApi {
     
     case getSimilar(movieId: Int)
     
+    // MARK: - API: Search
+    
     case searchMulti(query: String)
     
     case searchKeyword(query: String)
@@ -50,6 +52,9 @@ enum CinefyApi {
     case searchPeople(query: String)
     
     case searchMovie(query: String)
+    
+    // MARK: - Path: Person
+    case getDetailPerson(id: Int)
 }
 
 extension CinefyApi : APIBuilder {
@@ -104,6 +109,9 @@ extension CinefyApi : APIBuilder {
             return "search/person"
         case .searchMovie(_):
             return "search/movie"
+            // MARK: - Path: Person
+        case .getDetailPerson(let id):
+            return "person/\(id)"
         }
     }
     

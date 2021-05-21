@@ -25,7 +25,13 @@ class MovieViewModel : ObservableObject {
     private(set) var timer = Timer.publish(every: 10, on: .main, in: .common).autoconnect()
     
     init(apiService: APIService) {
+        print("Init MoviesViewModel")
         self.apiService = apiService
+    }
+    
+    deinit {
+        print("Deinit MoviesViewModel")
+        cancellables.forEach { $0.cancel() }
     }
     
     func getNowPlayingMovies() {
