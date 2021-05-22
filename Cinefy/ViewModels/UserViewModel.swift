@@ -130,7 +130,6 @@ class UserViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { account in
-                print("Account.json: \(account.json)")
                 UserDefaults.standard.set(account.json, forKey: "account")
                 UserState.account = account
                 self.updateUserState()

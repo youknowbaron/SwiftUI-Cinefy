@@ -21,7 +21,6 @@ class UserState {
         sessionID = UserDefaults.standard.object(forKey: "session_id") as? String
         if sessionID != nil {
             account = Account(json: UserDefaults.standard.data(forKey: "account"))
-            print("[UserState initialize] \(String(describing: account))")
         }
     }
     
