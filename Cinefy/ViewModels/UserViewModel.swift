@@ -8,18 +8,25 @@
 import Foundation
 import Combine
 
-class LoginViewModel: ObservableObject {
+class UserViewModel: ObservableObject {
     
     private var apiService: APIService
     
+    @Published private(set) var isLogin = false
+    private(set) var account: Account?
+    private(set) var sessionId: String?
+    
     init(apiService: APIService) {
         self.apiService = apiService
+        UserState.initialize()
+        updateUserState()
     }
     
     deinit {
         print("deinit LoginViewModel")
         cancellables.forEach { $0.cancel() }
     }
+
     
     let loginSubject = PassthroughSubject<Account, Never>()
     
@@ -45,6 +52,7 @@ class LoginViewModel: ObservableObject {
     
     @Published var shouldShowAlert = false
     
+    // MARK: APIs
     func login(username: String, password: String) {
         state = .loading
         getRquestToken(username: username, password: password)
@@ -122,12 +130,24 @@ class LoginViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { account in
+                print("Account.json: \(account.json)")
                 UserDefaults.standard.set(account.json, forKey: "account")
                 UserState.account = account
+                self.updateUserState()
                 self.loginSubject.send(account)
-                print("Account Detail: \(account)")
             }
         
         cancellables.insert(cancellable)
+    }
+    
+    func logout() {
+        UserState.logout()
+        updateUserState()
+    }
+    
+    private func updateUserState() {
+        sessionId = UserState.sessionID
+        account = UserState.account
+        isLogin = UserState.isLogin
     }
 }

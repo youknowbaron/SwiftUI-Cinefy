@@ -10,24 +10,29 @@ import SwiftUI
 struct AccountScreen: View {
     
     @Environment(\.presentationMode) var presentationMode
-    
-    var account = UserState.account!
+    @EnvironmentObject var userViewModel: UserViewModel
     
     var onLogout: () -> Void
     
     var body: some View {
-        print(account)
-        return List {
-            AvatarView(url: account.avatar.tmdb.avatarPath, size: 120)
-            
-            Button("Logout") {
-                UserState.logout()
-                presentationMode.wrappedValue.dismiss()
-                onLogout()
+        let account = userViewModel.account
+        Group {
+            if let account = account {
+                List {
+                    AvatarView(url: account.avatar.tmdb.avatarPath, size: 120)
+                    
+                    Button("Logout") {
+                        presentationMode.wrappedValue.dismiss()
+                        userViewModel.logout()
+                        onLogout()
+                    }
+                    .foregroundColor(.highlightColor)
+                }
+            } else {
+                EmptyView()
             }
-            .foregroundColor(.highlightColor)
         }
-        .navigationBarTitle(account.nameTitle)
+        .navigationBarTitle(account?.nameTitle ?? "")
     }
 }
 

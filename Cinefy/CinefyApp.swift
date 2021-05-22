@@ -10,15 +10,17 @@ import SwiftUI
 @main
 struct CinefyApp: App {
     
+    @StateObject var userViewModel = UserViewModel(apiService: APIServiceImpl())
+    
     init() {
         setupApperance()
-        UserState.initialize()
     }
     
     var body: some Scene {
         WindowGroup {
             MainScreen()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
+                .environmentObject(userViewModel)
         }
     }
     

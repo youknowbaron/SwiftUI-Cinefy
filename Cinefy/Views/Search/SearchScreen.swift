@@ -14,6 +14,12 @@ struct SearchScreen: View {
     @StateObject private var viewModel = SearchViewModel(apiService: APIServiceImpl())
     @State private var isSearching = false
     
+    enum SearchFilter: Int {
+        case movies, people
+    }
+    
+    @State private var searchFilter = SearchFilter.movies
+    
     var body: some View {
         
         List {
@@ -23,6 +29,12 @@ struct SearchScreen: View {
                 isSearching: $isSearching
             )
             
+            Picker(selection: $searchFilter, label: Text("")) {
+                Text("Movies").tag(SearchFilter.movies)
+                Text("People").tag(SearchFilter.people)
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            
             ForEach(viewModel.searchedKeywords) { keyword in
                 Text(keyword.name)
                     .padding(.vertical, 5)
@@ -31,10 +43,22 @@ struct SearchScreen: View {
                     }
             }
             
-            ForEach(viewModel.searchedMovies) { movie in
-                NavigationLink(destination: DetailMovieScreen(movie: movie)) {
-                    MovieRow(movie: movie)
+            if case .movies = searchFilter {
+                ForEach(viewModel.searchedMovies) { movie in
+                    NavigationLink(destination: DetailMovieScreen(movie: movie)) {
+                        MovieRow(movie: movie)
+                    }
                 }
+                .transition(.move(edge: .leading))
+                .animation(.default)
+            } else {
+                ForEach(viewModel.people) { people in
+                    NavigationLink(destination: DetailCastScreen(cast: people)) {
+                        PeopleRow(cast: people)
+                    }
+                }
+                .transition(.move(edge: .trailing))
+                .animation(.default)
             }
             
         }

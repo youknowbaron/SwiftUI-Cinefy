@@ -28,6 +28,7 @@ class SearchViewModel: ObservableObject {
     
     @Published private(set) var searchedKeywords: [Keyword] = []
     @Published private(set) var searchedMovies: [Movie] = []
+    @Published private(set) var people: [Cast] = []
 //    @Published private(set) var searchedPeople: []
         
     let searchSubject = PassthroughSubject<String, Never>()
@@ -74,7 +75,14 @@ class SearchViewModel: ObservableObject {
                 self.searchedMovies = value.results.onlyAvailableImage()
             }
         
+        let peopleCancellable = apiService.request(.searchPeople(query: text), dataType: PeopleResponse.self)
+            .sink { status in print(status) } receiveValue: { value in
+                print("Search people with keyword \(text): lenght of result is \(value.results.count)")
+                self.people = value.results
+            }
+        
         cancellables.insert(keywordCancellable)
         cancellables.insert(movieCancellable)
+        cancellables.insert(peopleCancellable)
     }
 }

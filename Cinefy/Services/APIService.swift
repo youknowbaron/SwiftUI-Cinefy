@@ -43,7 +43,7 @@ struct APIServiceImpl: APIService {
     
     func request<Response: Codable>(_ endpoint: CinefyApi, dataType: Response.Type) -> AnyPublisher<Response, APIError> {
         
-        log(request: endpoint.urlRequest)
+//        log(request: endpoint.urlRequest)
         
         return URLSession.shared
             .dataTaskPublisher(for: endpoint.urlRequest)

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginSheet: View {
     
-    @StateObject var viewModel = LoginViewModel(apiService: APIServiceImpl())
+    @EnvironmentObject var viewModel: UserViewModel
     
     @Environment(\.presentationMode) var presentationMode
     

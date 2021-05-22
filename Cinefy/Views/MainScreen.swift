@@ -15,8 +15,6 @@ struct MainScreen: View {
     
     @State private var selectingTab = Tab.movies
     
-    @Environment(\.presentationMode) var presentationMode
-    
     func tabItem(text: String, image: String) -> some View {
         VStack {
             Image(systemName: image)

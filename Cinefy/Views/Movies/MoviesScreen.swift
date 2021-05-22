@@ -12,7 +12,8 @@ struct MoviesScreen: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel = MovieViewModel(apiService: APIServiceImpl())
     @State var showLogInSheet = false
-    @State var account = UserState.account
+    
+    @EnvironmentObject var userViewModel: UserViewModel
     
     var body: some View {
         
@@ -76,8 +77,8 @@ struct MoviesScreen: View {
                                 .padding()
                         }
                         
-                        if UserState.isLogin {
-                            NavigationLink(destination: AccountScreen { account = nil } ) {
+                        if userViewModel.isLogin {
+                            NavigationLink(destination: AccountScreen {} ) {
                                 avatar
                             }
                         } else {
@@ -86,9 +87,9 @@ struct MoviesScreen: View {
                             }
                             .sheet(isPresented: $showLogInSheet) {
                                 LoginSheet { account in
-                                    self.account = account
                                     print("Callback login success in MoviesScreen")
                                 }
+                                .environmentObject(userViewModel)
                             }
                         }
                     }
@@ -105,7 +106,7 @@ struct MoviesScreen: View {
     }
     
     var avatar: some View {
-        AvatarView(url: account?.avatar.tmdb.avatarPath)
+        AvatarView(url: userViewModel.account?.avatar.tmdb.avatarPath)
             
     }
     
