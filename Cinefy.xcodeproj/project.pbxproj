@@ -40,6 +40,8 @@
 		FE58848B2657C2270016E747 /* AskToLoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE58848A2657C2270016E747 /* AskToLoginView.swift */; };
 		FE58848D2658B1C50016E747 /* UserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE58848C2658B1C50016E747 /* UserState.swift */; };
 		FE588491265B51150016E747 /* ShimmerMovieRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE588490265B51150016E747 /* ShimmerMovieRow.swift */; };
+		FE588493265B80860016E747 /* OffsetTopPreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE588492265B80860016E747 /* OffsetTopPreferenceKey.swift */; };
+		FE588495265B89C70016E747 /* PagedResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE588494265B89C70016E747 /* PagedResponse.swift */; };
 		FE78DBED265204A300A7FE3C /* TokenResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBEC265204A300A7FE3C /* TokenResponse.swift */; };
 		FE78DBEF2652110500A7FE3C /* SessionIDResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBEE2652110500A7FE3C /* SessionIDResponse.swift */; };
 		FE78DBF126521A8300A7FE3C /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE78DBF026521A8300A7FE3C /* ViewExtensions.swift */; };
@@ -118,6 +120,8 @@
 		FE58848A2657C2270016E747 /* AskToLoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AskToLoginView.swift; sourceTree = "<group>"; };
 		FE58848C2658B1C50016E747 /* UserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserState.swift; sourceTree = "<group>"; };
 		FE588490265B51150016E747 /* ShimmerMovieRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShimmerMovieRow.swift; sourceTree = "<group>"; };
+		FE588492265B80860016E747 /* OffsetTopPreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetTopPreferenceKey.swift; sourceTree = "<group>"; };
+		FE588494265B89C70016E747 /* PagedResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PagedResponse.swift; sourceTree = "<group>"; };
 		FE78DBEC265204A300A7FE3C /* TokenResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenResponse.swift; sourceTree = "<group>"; };
 		FE78DBEE2652110500A7FE3C /* SessionIDResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionIDResponse.swift; sourceTree = "<group>"; };
 		FE78DBF026521A8300A7FE3C /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
@@ -200,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				FE58848C2658B1C50016E747 /* UserState.swift */,
+				FE588492265B80860016E747 /* OffsetTopPreferenceKey.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -338,6 +343,7 @@
 				FE022E31264D29D4002DEEC0 /* Movie.swift */,
 				FED7D910264CCADC00254BD1 /* MoviesResponse.swift */,
 				FE58847C26578C3A0016E747 /* MovieState.swift */,
+				FE5884882657B55D0016E747 /* PeopleResponse.swift */,
 				FED7D92B264D1FF800254BD1 /* ProductionCompany.swift */,
 				FED7D92D264D201100254BD1 /* ProductionCountry.swift */,
 				FE78DC0526537AFC00A7FE3C /* Review.swift */,
@@ -345,7 +351,7 @@
 				FE78DBEE2652110500A7FE3C /* SessionIDResponse.swift */,
 				FED7D92F264D202300254BD1 /* SpokenLanguage.swift */,
 				FE78DBEC265204A300A7FE3C /* TokenResponse.swift */,
-				FE5884882657B55D0016E747 /* PeopleResponse.swift */,
+				FE588494265B89C70016E747 /* PagedResponse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -456,6 +462,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FED7D911264CCADC00254BD1 /* MoviesResponse.swift in Sources */,
+				FE588493265B80860016E747 /* OffsetTopPreferenceKey.swift in Sources */,
 				FED7D92C264D1FF800254BD1 /* ProductionCompany.swift in Sources */,
 				FE58848526579A060016E747 /* WatchlistViewModel.swift in Sources */,
 				FED7D900264BBE3200254BD1 /* LogoAnimatedView.swift in Sources */,
@@ -479,6 +486,7 @@
 				FE022E30264D28DC002DEEC0 /* MoviesScreen.swift in Sources */,
 				FE58846C265668310016E747 /* HeaderRow.swift in Sources */,
 				FED7D918264CDCB400254BD1 /* APIService.swift in Sources */,
+				FE588495265B89C70016E747 /* PagedResponse.swift in Sources */,
 				FE5884872657B3EF0016E747 /* PeopleRow.swift in Sources */,
 				FEB9C2D3264E0EFF00B7AD0E /* MyButton.swift in Sources */,
 				FED7D908264BC59D00254BD1 /* MyColors.swift in Sources */,

@@ -118,7 +118,8 @@ class UserViewModel: ObservableObject {
     }
     
     private func getAccountDetail(sessionId: String) {
-        let cancellable = apiService.request(.getDetailAccount(sessionId: sessionId), dataType: Account.self)
+        let request = CinefyApi.getDetailAccount(query: [CinefyApi.SESSION_ID_KEY: sessionId])
+        let cancellable = apiService.request(request, dataType: Account.self)
             .sink { status in
                 switch status {
                 case .finished:
@@ -150,30 +151,4 @@ class UserViewModel: ObservableObject {
         isLogin = UserState.isLogin
     }
     
-    // MARK: APIs: Movies
-    
-    @Published private(set) var stateOfPopularMovies = [Int:Bool]()
-
-    func isAdded2Watchlist(id: Int) -> Bool {
-        stateOfPopularMovies[id] ?? false
-    }
-    
-    func addToWatchlist(mediaType: String = "movie", mediaId: Int) {
-        guard isLogin else { return }
-        if stateOfPopularMovies[mediaId] != nil {
-            stateOfPopularMovies[mediaId]!.toggle()
-        } else {
-            stateOfPopularMovies[mediaId] = true
-        }
-        let cancellable = apiService.request(
-            .addToWatchlist(
-                accountId: UserState.account!.id,
-                sessionId: UserState.sessionID!,
-                body: ["media_type": mediaType, "media_id": mediaId, "watchlist": stateOfPopularMovies[mediaId]!]
-            ), dataType: MessageResponse.self)
-            .sink { status in print(status) } receiveValue: { value in
-                print("addToWatchlist \(value)")
-            }
-        cancellables.insert(cancellable)
-    }
 }

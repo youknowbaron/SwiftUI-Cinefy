@@ -54,8 +54,10 @@ public struct SearchField : View {
                     .animation(.default)
                 }
             }
-            //            .preference(key: OffsetTopPreferenceKey.self,
-            //                        value: reader.frame(in: .global).minY)
+            .preference(
+                key: OffsetTopPreferenceKey.self,
+                value: reader.frame(in: .global).minY
+            )
             .padding(4)
         }.frame(height: 44)
     }

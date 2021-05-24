@@ -24,15 +24,15 @@ enum CinefyApi {
     
     case createSessionWithLogin(body: [String: Any])
     
-    case getDetailAccount(sessionId: String)
+    case getDetailAccount(query: [String: String])
     
-    case markAsFavorite(accountId: Int, sessionId: String, body:[String:Any])
+    case markAsFavorite(accountId: Int, query: [String: String], body:[String:Any])
     
-    case addToWatchlist(accountId: Int, sessionId: String, body:[String:Any])
+    case addToWatchlist(accountId: Int, query: [String: String], body:[String:Any])
     
-    case getFavoriteMovies(accountId: Int, sessionId: String)
+    case getFavoriteMovies(accountId: Int, query: [String: String])
     
-    case getWatchlistMovies(accountId: Int, sessionId: String)
+    case getWatchlistMovies(accountId: Int, query: [String: String])
     
     // MARK: - API: Movies
     case getNowPlayingMovies
@@ -51,23 +51,27 @@ enum CinefyApi {
     
     case getSimilar(movieId: Int)
     
-    case getMovieState(id: Int, sessionId: String)
+    case getMovieState(id: Int, query: [String: String])
     
     // MARK: - API: Search
     
-    case searchMulti(query: String)
+    case searchMulti(query: [String: String])
     
-    case searchKeyword(query: String)
+    case searchKeyword(query: [String: String])
     
-    case searchPeople(query: String)
+    case searchPeople(query: [String: String])
     
-    case searchMovie(query: String)
+    case searchMovie(query: [String: String])
     
     // MARK: - Path: Person
     case getDetailPerson(id: Int)
 }
 
 extension CinefyApi : APIBuilder {
+    
+    static let SESSION_ID_KEY = "session_id"
+    static let QUERY_KEY = "query"
+    
     var urlRequest: URLRequest {
         var urlRequest = URLRequest(url: baseUrl.appendingPathComponent(path))
         switch self {
@@ -139,13 +143,13 @@ extension CinefyApi : APIBuilder {
     var baseUrl: URL {
         var url = URL(string: "https://api.themoviedb.org/3")!.addQuery(queries: ["api_key": "4de371dea47b9a5dcd86c1cf83c48d4e"])
         switch self {
-        case .getDetailAccount(let sessionId), .addToWatchlist(_, let sessionId, _),
-             .markAsFavorite(_, let sessionId, _), .getMovieState(_, let sessionId),
-             .getFavoriteMovies(_, let sessionId), .getWatchlistMovies(_, let sessionId):
-            url = url.addQuery(queries: ["session_id" : sessionId])
+        case .getDetailAccount(let query), .addToWatchlist(_, let query, _),
+             .markAsFavorite(_, let query, _), .getMovieState(_, let query),
+             .getFavoriteMovies(_, let query), .getWatchlistMovies(_, let query),
+             .searchMulti(let query), .searchKeyword(let query),
+             .searchPeople(let query), .searchMovie(let query):
+            url = url.addQuery(queries: query)
             break
-        case .searchMulti(let query), .searchKeyword(let query), .searchPeople(let query), .searchMovie(let query):
-            url = url.addQuery(queries: ["query": query])
         default:
             break
         }
@@ -154,7 +158,6 @@ extension CinefyApi : APIBuilder {
 }
 
 extension URL {
-    
     func addQuery(queries: [String: String]) -> URL {
         guard var urlComponents = URLComponents(string: absoluteString) else {
             return absoluteURL

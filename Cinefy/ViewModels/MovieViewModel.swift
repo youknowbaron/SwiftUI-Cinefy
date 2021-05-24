@@ -68,6 +68,7 @@ class MovieViewModel : ObservableObject {
             } receiveValue: { value in
                 self.popularMovie = value.results.randomElement()
                 self.popularMovies = value.results
+                self.popularMovies.forEach { self.getMovieState(id: $0.id) }
             }
         cancellables.insert(cancellable)
     }
@@ -92,6 +93,9 @@ class MovieViewModel : ObservableObject {
     
     func changePopularMovie() {
         popularMovie = popularMovies.randomElement()
+//        if stateOfPopularMovies[popularMovie!.id] == nil {
+//            getMovieState(id: popularMovie!.id)
+//        }
     }
     
     var orderNumberOfPopularMovie: Int {
@@ -105,5 +109,43 @@ class MovieViewModel : ObservableObject {
 
     func cancelTimer() {
         timer.upstream.connect().cancel()
+    }
+    
+    
+    @Published private(set) var stateOfPopularMovies = [Int:Bool]()
+
+    func isAdded2Watchlist(id: Int) -> Bool {
+        stateOfPopularMovies[id] ?? false
+    }
+    
+    func addToWatchlist(mediaType: String = "movie", mediaId: Int) {
+        guard UserState.isLogin else { return }
+        if stateOfPopularMovies[mediaId] != nil {
+            stateOfPopularMovies[mediaId]!.toggle()
+        } else {
+            stateOfPopularMovies[mediaId] = true
+        }
+        let request = CinefyApi.addToWatchlist(
+            accountId: UserState.account!.id,
+            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            body: ["media_type": mediaType, "media_id": mediaId, "watchlist": stateOfPopularMovies[mediaId]!]
+        )
+        let cancellable = apiService.request(request, dataType: MessageResponse.self)
+            .sink { status in print(status) } receiveValue: { value in
+                print("addToWatchlist \(value)")
+            }
+        cancellables.insert(cancellable)
+    }
+    
+    func getMovieState(id: Int) {
+        guard UserState.isLogin else { return }
+        let request = CinefyApi.getMovieState(id: id, query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!])
+        let cancellable = apiService.request(request, dataType: MovieState.self)
+            .sink { status in
+                print(status)
+            } receiveValue: { value in
+                self.stateOfPopularMovies[id] = value.watchlist
+            }
+        cancellables.insert(cancellable)
     }
 }

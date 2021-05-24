@@ -28,7 +28,7 @@ struct MoviesScreen: View {
                     VStack(alignment: .leading) {
                         
                         if let popularMovie = viewModel.popularMovie {
-                            PopularHeaderView(movie: popularMovie, no: viewModel.orderNumberOfPopularMovie)
+                            PopularHeaderView(viewModel: viewModel, movie: popularMovie, no: viewModel.orderNumberOfPopularMovie)
                                 .frame(width: width, height: width * 3 / 2)
                                 .onReceive(viewModel.timer) { time in
                                     viewModel.changePopularMovie()
@@ -107,7 +107,6 @@ struct MoviesScreen: View {
     
     var avatar: some View {
         AvatarView(url: userViewModel.account?.avatar.tmdb.avatarPath)
-            
     }
     
 }

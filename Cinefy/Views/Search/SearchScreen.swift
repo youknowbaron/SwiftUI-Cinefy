@@ -28,6 +28,10 @@ struct SearchScreen: View {
                 placeholder: "Search any movies or person",
                 isSearching: $isSearching
             )
+            .onPreferenceChange(OffsetTopPreferenceKey.self) { value in
+                print("onPreferenceChange \(value)")
+                UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+            }
             
             Picker(selection: $searchFilter, label: Text("")) {
                 Text("Movies").tag(SearchFilter.movies)

@@ -128,12 +128,12 @@ class DetailMovieViewModel : ObservableObject {
     func markAsFavorite(mediaType: String = "movie", mediaId: Int) {
         guard UserState.isLogin else { return }
         self.isFavorited.toggle()
-        let cancellable = apiService.request(
-            .markAsFavorite(
-                accountId: UserState.account!.id,
-                sessionId: UserState.sessionID!,
-                body: ["media_type": mediaType, "media_id": mediaId, "favorite": self.isFavorited]
-            ), dataType: MessageResponse.self)
+        let request = CinefyApi.markAsFavorite(
+            accountId: UserState.account!.id,
+            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            body: ["media_type": mediaType, "media_id": mediaId, "favorite": self.isFavorited]
+        )
+        let cancellable = apiService.request(request, dataType: MessageResponse.self)
             .sink { status in } receiveValue: { value in
                 print("markAsFavorite \(value)")
             }
@@ -144,12 +144,12 @@ class DetailMovieViewModel : ObservableObject {
     func addToWatchlist(mediaType: String = "movie", mediaId: Int) {
         guard UserState.isLogin else { return }
         self.isAdded2Watchlist.toggle()
-        let cancellable = apiService.request(
-            .addToWatchlist(
-                accountId: UserState.account!.id,
-                sessionId: UserState.sessionID!,
-                body: ["media_type": mediaType, "media_id": mediaId, "watchlist": self.isAdded2Watchlist]
-            ), dataType: MessageResponse.self)
+        let request = CinefyApi.addToWatchlist(
+            accountId: UserState.account!.id,
+            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            body: ["media_type": mediaType, "media_id": mediaId, "watchlist": self.isAdded2Watchlist]
+        )
+        let cancellable = apiService.request(request, dataType: MessageResponse.self)
             .sink { status in print(status) } receiveValue: { value in
                 print("addToWatchlist \(value)")
             }
@@ -158,7 +158,8 @@ class DetailMovieViewModel : ObservableObject {
     
     func getMovieState(id: Int) {
         guard UserState.isLogin else { return }
-        let cancellable = apiService.request(.getMovieState(id: id, sessionId: UserState.sessionID!), dataType: MovieState.self)
+        let request = CinefyApi.getMovieState(id: id, query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!])
+        let cancellable = apiService.request(request, dataType: MovieState.self)
             .sink { status in
                 print(status)
             } receiveValue: { value in

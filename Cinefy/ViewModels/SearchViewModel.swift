@@ -57,7 +57,10 @@ class SearchViewModel: ObservableObject {
     }
     
     private func onUpdateTextDebounced(text: String) {
-        let keywordCancellable = apiService.request(.searchKeyword(query: text), dataType: KeywordsResponse.self)
+        let keywordRequest = CinefyApi.searchKeyword(
+            query: [CinefyApi.QUERY_KEY: text]
+        )
+        let keywordCancellable = apiService.request(keywordRequest, dataType: KeywordsResponse.self)
             .sink { status in
                 print(status)
             } receiveValue: { value in
@@ -67,7 +70,10 @@ class SearchViewModel: ObservableObject {
                 self.searchedKeywords = results
             }
         
-        let movieCancellable = apiService.request(.searchMovie(query: text), dataType: MoviesResponse.self)
+        let movieRequest = CinefyApi.searchMovie(
+            query: [CinefyApi.QUERY_KEY: text]
+        )
+        let movieCancellable = apiService.request(movieRequest, dataType: PagedResponse<Movie>.self)
             .sink { status in
                 print(status)
             } receiveValue: { value in
@@ -75,7 +81,10 @@ class SearchViewModel: ObservableObject {
                 self.searchedMovies = value.results.onlyAvailableImage()
             }
         
-        let peopleCancellable = apiService.request(.searchPeople(query: text), dataType: PeopleResponse.self)
+        let peopleRequest = CinefyApi.searchPeople(
+            query: [CinefyApi.QUERY_KEY: text]
+        )
+        let peopleCancellable = apiService.request(peopleRequest, dataType: PeopleResponse.self)
             .sink { status in print(status) } receiveValue: { value in
                 print("Search people with keyword \(text): lenght of result is \(value.results.count)")
                 self.people = value.results
