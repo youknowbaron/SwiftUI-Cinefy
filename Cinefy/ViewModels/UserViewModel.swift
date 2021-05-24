@@ -52,7 +52,7 @@ class UserViewModel: ObservableObject {
     
     @Published var shouldShowAlert = false
     
-    // MARK: APIs
+    // MARK: APIs: Authentication
     func login(username: String, password: String) {
         state = .loading
         getRquestToken(username: username, password: password)
@@ -148,5 +148,32 @@ class UserViewModel: ObservableObject {
         sessionId = UserState.sessionID
         account = UserState.account
         isLogin = UserState.isLogin
+    }
+    
+    // MARK: APIs: Movies
+    
+    @Published private(set) var stateOfPopularMovies = [Int:Bool]()
+
+    func isAdded2Watchlist(id: Int) -> Bool {
+        stateOfPopularMovies[id] ?? false
+    }
+    
+    func addToWatchlist(mediaType: String = "movie", mediaId: Int) {
+        guard isLogin else { return }
+        if stateOfPopularMovies[mediaId] != nil {
+            stateOfPopularMovies[mediaId]!.toggle()
+        } else {
+            stateOfPopularMovies[mediaId] = true
+        }
+        let cancellable = apiService.request(
+            .addToWatchlist(
+                accountId: UserState.account!.id,
+                sessionId: UserState.sessionID!,
+                body: ["media_type": mediaType, "media_id": mediaId, "watchlist": stateOfPopularMovies[mediaId]!]
+            ), dataType: MessageResponse.self)
+            .sink { status in print(status) } receiveValue: { value in
+                print("addToWatchlist \(value)")
+            }
+        cancellables.insert(cancellable)
     }
 }

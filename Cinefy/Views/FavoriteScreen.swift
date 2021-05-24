@@ -16,10 +16,19 @@ struct FavoriteScreen: View {
         NavigationView {
             List {
                 if userViewModel.isLogin {
-                    ForEach(viewModel.favoriteMovies) { movie in
-                        NavigationLink(destination: DetailMovieScreen(movie: movie)) {
-                            MovieRow(movie: movie)
+                    switch viewModel.state {
+                    case .loading:
+                        ForEach(0..<2) { _ in
+                            ShimmerMovieRow()
                         }
+                    case .success(_):
+                        ForEach(viewModel.favoriteMovies) { movie in
+                            NavigationLink(destination: DetailMovieScreen(movie: movie)) {
+                                MovieRow(movie: movie)
+                            }
+                        }
+                    case .failed(_):
+                        Text("Empty")
                     }
                 }
                 else {
@@ -35,3 +44,4 @@ struct FavoriteScreen: View {
         }
     }
 }
+

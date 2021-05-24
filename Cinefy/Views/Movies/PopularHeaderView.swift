@@ -10,6 +10,8 @@ import SDWebImageSwiftUI
 
 struct PopularHeaderView: View {
     
+    @EnvironmentObject var userViewModel: UserViewModel
+    
     var movie: Movie
     var no: Int
     
@@ -50,11 +52,15 @@ struct PopularHeaderView: View {
                         Spacer()
                         
                         VStack(spacing: 5) {
-                            Image(systemName: "plus")
+                            Image(systemName: userViewModel.isAdded2Watchlist(id: movie.id) ? "checkmark" : "plus")
                             Text("Watchlist")
                                 .font(.system(size: 12, weight: .light))
                         }
-                        .foregroundColor(.subTextColor)
+                        .foregroundColor(userViewModel.isAdded2Watchlist(id: movie.id) ? .highlightColor : .subTextColor)
+                        .onTapGesture {
+                            userViewModel.addToWatchlist(mediaId: movie.id)
+                        }
+                        
                         Spacer()
                         
                         HStack(spacing: 10) {
