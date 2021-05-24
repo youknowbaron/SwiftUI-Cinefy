@@ -58,7 +58,7 @@ class SearchViewModel: ObservableObject {
     
     private func onUpdateTextDebounced(text: String) {
         let keywordRequest = CinefyApi.searchKeyword(
-            query: [CinefyApi.QUERY_KEY: text]
+            query: [APIKeys.QUERY: text]
         )
         let keywordCancellable = apiService.request(keywordRequest, dataType: KeywordsResponse.self)
             .sink { status in
@@ -71,7 +71,7 @@ class SearchViewModel: ObservableObject {
             }
         
         let movieRequest = CinefyApi.searchMovie(
-            query: [CinefyApi.QUERY_KEY: text]
+            query: [APIKeys.QUERY: text]
         )
         let movieCancellable = apiService.request(movieRequest, dataType: PagedResponse<Movie>.self)
             .sink { status in
@@ -82,7 +82,7 @@ class SearchViewModel: ObservableObject {
             }
         
         let peopleRequest = CinefyApi.searchPeople(
-            query: [CinefyApi.QUERY_KEY: text]
+            query: [APIKeys.QUERY: text]
         )
         let peopleCancellable = apiService.request(peopleRequest, dataType: PeopleResponse.self)
             .sink { status in print(status) } receiveValue: { value in

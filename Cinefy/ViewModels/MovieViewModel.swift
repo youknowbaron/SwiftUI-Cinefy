@@ -35,11 +35,10 @@ class MovieViewModel : ObservableObject {
     }
     
     func getNowPlayingMovies() {
-        let cancellable = apiService.request(.getNowPlayingMovies, dataType: MoviesResponse.self)
+        let cancellable = apiService.request(.getNowPlayingMovies(), dataType: MoviesResponse.self)
             .sink { status in
                 switch status {
                 case .finished:
-                    self.state = .success(data: self.nowPlayingMovies)
                     print("Movies length: \(self.nowPlayingMovies.count)")
                     break
                 case .failure(let error):
@@ -59,6 +58,7 @@ class MovieViewModel : ObservableObject {
                 switch status {
                 case .finished:
                     print("Loaded popular movies successfully")
+                    self.state = .success(data: self.popularMovies)
                     break
                 case .failure(let error):
                     print("Error: \(error)")
@@ -74,7 +74,7 @@ class MovieViewModel : ObservableObject {
     }
     
     func getUpcomingMovies() {
-        let cancellable = apiService.request(.getUpcomingMovies, dataType: MoviesResponse.self)
+        let cancellable = apiService.request(.getUpcomingMovies(), dataType: MoviesResponse.self)
             .sink { status in
                 switch status {
                 case .finished:
@@ -127,7 +127,7 @@ class MovieViewModel : ObservableObject {
         }
         let request = CinefyApi.addToWatchlist(
             accountId: UserState.account!.id,
-            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            query: [APIKeys.SESSION_ID: UserState.sessionID!],
             body: ["media_type": mediaType, "media_id": mediaId, "watchlist": stateOfPopularMovies[mediaId]!]
         )
         let cancellable = apiService.request(request, dataType: MessageResponse.self)
@@ -139,7 +139,7 @@ class MovieViewModel : ObservableObject {
     
     func getMovieState(id: Int) {
         guard UserState.isLogin else { return }
-        let request = CinefyApi.getMovieState(id: id, query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!])
+        let request = CinefyApi.getMovieState(id: id, query: [APIKeys.SESSION_ID: UserState.sessionID!])
         let cancellable = apiService.request(request, dataType: MovieState.self)
             .sink { status in
                 print(status)

@@ -29,7 +29,7 @@ class FavoriteViewModel : ObservableObject {
         guard UserState.isLogin else { return }
         let request = CinefyApi.getFavoriteMovies(
             accountId: UserState.account!.id,
-            query: [CinefyApi.SESSION_ID_KEY:UserState.sessionID!]
+            query: [APIKeys.SESSION_ID: UserState.sessionID!]
         )
         let cancellable = apiService.request(request, dataType: MoviesResponse.self)
             .sink { status in

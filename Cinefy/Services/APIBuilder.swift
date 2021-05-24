@@ -35,11 +35,11 @@ enum CinefyApi {
     case getWatchlistMovies(accountId: Int, query: [String: String])
     
     // MARK: - API: Movies
-    case getNowPlayingMovies
+    case getNowPlayingMovies(query: [String: String] = [:])
     
     case getPopularMovies
     
-    case getUpcomingMovies
+    case getUpcomingMovies(query: [String: String] = [:])
     
     case getMovieDetail(Int)
     
@@ -67,11 +67,13 @@ enum CinefyApi {
     case getDetailPerson(id: Int)
 }
 
+class APIKeys {
+    static let SESSION_ID = "session_id"
+    static let QUERY = "query"
+    static let PAGE = "page"
+}
+
 extension CinefyApi : APIBuilder {
-    
-    static let SESSION_ID_KEY = "session_id"
-    static let QUERY_KEY = "query"
-    
     var urlRequest: URLRequest {
         var urlRequest = URLRequest(url: baseUrl.appendingPathComponent(path))
         switch self {
@@ -107,11 +109,11 @@ extension CinefyApi : APIBuilder {
         case .getWatchlistMovies(let accountId, _):
             return "/account/\(accountId)/watchlist/movies"
         // MARK: - Path: Movies
-        case .getNowPlayingMovies:
+        case .getNowPlayingMovies(_):
             return "movie/now_playing"
         case .getPopularMovies:
             return "movie/popular"
-        case .getUpcomingMovies:
+        case .getUpcomingMovies(_):
             return "movie/upcoming"
         case .getMovieDetail(let id):
             return "movie/\(id)"
@@ -147,7 +149,8 @@ extension CinefyApi : APIBuilder {
              .markAsFavorite(_, let query, _), .getMovieState(_, let query),
              .getFavoriteMovies(_, let query), .getWatchlistMovies(_, let query),
              .searchMulti(let query), .searchKeyword(let query),
-             .searchPeople(let query), .searchMovie(let query):
+             .searchPeople(let query), .searchMovie(let query),
+             .getNowPlayingMovies(let query), .getUpcomingMovies(let query):
             url = url.addQuery(queries: query)
             break
         default:

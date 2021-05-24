@@ -130,7 +130,7 @@ class DetailMovieViewModel : ObservableObject {
         self.isFavorited.toggle()
         let request = CinefyApi.markAsFavorite(
             accountId: UserState.account!.id,
-            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            query: [APIKeys.SESSION_ID: UserState.sessionID!],
             body: ["media_type": mediaType, "media_id": mediaId, "favorite": self.isFavorited]
         )
         let cancellable = apiService.request(request, dataType: MessageResponse.self)
@@ -146,7 +146,7 @@ class DetailMovieViewModel : ObservableObject {
         self.isAdded2Watchlist.toggle()
         let request = CinefyApi.addToWatchlist(
             accountId: UserState.account!.id,
-            query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!],
+            query: [APIKeys.SESSION_ID: UserState.sessionID!],
             body: ["media_type": mediaType, "media_id": mediaId, "watchlist": self.isAdded2Watchlist]
         )
         let cancellable = apiService.request(request, dataType: MessageResponse.self)
@@ -158,7 +158,7 @@ class DetailMovieViewModel : ObservableObject {
     
     func getMovieState(id: Int) {
         guard UserState.isLogin else { return }
-        let request = CinefyApi.getMovieState(id: id, query: [CinefyApi.SESSION_ID_KEY: UserState.sessionID!])
+        let request = CinefyApi.getMovieState(id: id, query: [APIKeys.SESSION_ID: UserState.sessionID!])
         let cancellable = apiService.request(request, dataType: MovieState.self)
             .sink { status in
                 print(status)

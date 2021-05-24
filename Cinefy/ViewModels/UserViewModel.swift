@@ -118,7 +118,7 @@ class UserViewModel: ObservableObject {
     }
     
     private func getAccountDetail(sessionId: String) {
-        let request = CinefyApi.getDetailAccount(query: [CinefyApi.SESSION_ID_KEY: sessionId])
+        let request = CinefyApi.getDetailAccount(query: [APIKeys.SESSION_ID: sessionId])
         let cancellable = apiService.request(request, dataType: Account.self)
             .sink { status in
                 switch status {
