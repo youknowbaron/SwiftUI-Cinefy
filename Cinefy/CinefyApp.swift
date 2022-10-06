@@ -21,6 +21,7 @@ struct CinefyApp: App {
             MainScreen()
                 .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
                 .environmentObject(userViewModel)
+                .preferredColorScheme(.dark)
         }
     }
     
